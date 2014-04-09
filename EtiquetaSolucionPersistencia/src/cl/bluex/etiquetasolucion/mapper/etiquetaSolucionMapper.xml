@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.etiquetasolucion.mapper.EtiquetaSolucionMapper">
+
+
+<!-- INICIO pck_etiqueta_solucion.get_solucion_etiqueta -->
+
+	<resultMap id="getSolucionEtiquetaRM" type="cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO">
+		<result property="codigoInquietud" 			column="inquiry_id" />
+		<result property="codEspecieValorada" 		column="eevv_nmr_serie" />
+		<result property="solucionTxt" 				column="solution_txt" />
+		<result property="codigoCliente" 			column="clhl_cdg" />
+		<result property="sucursalCliente" 			column="clhl_scrs" />
+		<result property="codTipoCliente" 			column="tpcl_cdg" />
+		<result property="fechaTerminoInquietud"	column="closed_dt" />
+		<result property="codigoOficina" 			column="ofcn_cdg" />
+		<result property="codigoPostaLocalidad" 	column="psta_cdg" />
+		<result property="codigoExcepcion" 			column="tpex_cdg" />
+		<result property="cantidadPiezas" 			column="esiq_cnt_piezas" />
+		<result property="observacionSolucion" 		column="esiq_obs" />
+		<result property="fechaPiezaTS" 			column="pzmv_fch_ts" />
+		<result property="fechaPiezaER" 			column="pzmv_fch_er" />
+		<result property="cantidadImpresion" 		column="q_impresion" />
+	</resultMap>
+
+	<parameterMap id="getSolucionEtiquetaPM" type="map">
+		<parameter property="i_fch_ini" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="i_fch_fin" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="i_empr_cdg" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="i_fevl_cdg" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="i_ofcn_cdg" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="i_psta_cdg" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="i_clhl_cdg" 		jdbcType="INTEGER" 	javaType="java.lang.Integer" 	mode="IN" />
+		<parameter property="i_clhl_scrs" 		jdbcType="INTEGER" 	javaType="java.lang.Integer" 	mode="IN" />
+		<parameter property="i_tpcl_cdg" 		jdbcType="INTEGER" 	javaType="java.lang.Integer" 	mode="IN" />
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="getSolucionEtiquetaRM" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="getSolucionEtiqueta" 
+	    statementType="CALLABLE"
+		parameterMap="getSolucionEtiquetaPM" 
+		resultMap="getSolucionEtiquetaRM">
+
+		{ call pck_etiqueta_solucion.get_solucion_etiqueta( ?,?,?,?,?,
+															?,?,?,?,?,
+															?,? )}
+	    
+	</select>
+<!-- FIN pck_etiqueta_solucion.get_solucion_etiqueta -->
+
+
+</mapper>
