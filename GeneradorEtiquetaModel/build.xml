@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="jenkins" name="digital_model">
+
+	<!-- Tareas JENKINS -->
+	<target name="clean">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="bin" includes="**/*" />
+		</delete>
+		<echo>project clean ${basedir}
+		</echo>
+	</target>
+
+	<target name="setup">
+		<tstamp />
+		<property environment="env" />
+
+		<!-- Variables de ambiente -->
+		<property name="jdk.compilador" value="${env.BLUEX_JDK16}/bin/javac" />
+		<property name="encoding" value="UTF-8" />
+		<property name="app.targetlevel" value="1.6" />
+		<property name="app.sourcelevel" value="1.6" />
+		<property name="libs" value="${env.BLUEX_LIBS}" />
+		<property name="jdk.memory.maximumsize" value="1024m" />
+
+		<!-- Path Source Code -->
+		<property name="src.dir.src" value="src" />
+		<property name="src.dir.test" value="test" />
+
+		<!-- Path Compile Code -->
+		<property name="build.dir.src" value="bin/src" />
+		<property name="build.dir.test" value="bin/test" />
+		<property name="build.dir.dist" value="bin/dist" />
+
+		<!-- making directories -->
+		<mkdir dir="${build.dir.src}" />
+		<mkdir dir="${build.dir.test}" />
+		<mkdir dir="${build.dir.dist}" />
+
+		<!-- Classpath -->
+		<path id="lib.classpath">
+			<fileset dir="${libs}">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${basedir}/../">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<!-- Source Compile -->
+	<target name="compile" depends="clean, setup">
+		<compile src="${src.dir.src}" dest="${build.dir.src}" />
+		<compile src="${src.dir.test}" dest="${build.dir.test}" />
+	</target>
+
+	<macrodef name="compile">
+		<attribute name="src" />
+		<attribute name="dest" />
+		<sequential>
+			<javac debug="false" deprecation="false" executable="${jdk.compilador}" encoding="${encoding}" nowarn="on" destdir="@{dest}" target="${app.targetlevel}" source="${app.sourcelevel}" fork="true" memorymaximumsize="${jdk.memory.maximumsize}" includeantruntime="false">
+				<src>
+					<pathelement location="@{src}" />
+				</src>
+				<classpath>
+					<path id="classpath.test">
+						<pathelement location="${build.dir.src}" />
+					</path>
+					<path refid="lib.classpath" />
+				</classpath>
+			</javac>
+		</sequential>
+	</macrodef>
+
+	<target name="jar">
+		<jar destfile="${build.dir.dist}/${ant.project.name}.jar" basedir="${build.dir.src}" />
+	</target>
+
+	<!-- Unitary Test -->
+	<target name="unitary-test">
+		<echo>Unitary Test</echo>
+	</target>
+
+	<target name="jenkins" depends="compile, jar, unitary-test" />
+</project>

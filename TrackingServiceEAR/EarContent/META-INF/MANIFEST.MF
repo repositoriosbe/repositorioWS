@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Dependencies: deployment.bluexlib.war, deployment.samlib.war, deployment.trackinglib.war

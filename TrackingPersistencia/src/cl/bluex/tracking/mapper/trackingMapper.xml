@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.tracking.mapper.TrackingMapper">
+
+<!-- INICIO pck_tracking_operacional.get_tracking_referencia -->
+	<resultMap id="obtTrackRefRM" type="cl.bluex.trackingmodel.to.TrackingReferenciaTO">
+		<result property="fechaCreacion" 				column="oser_fch_creacion" />
+		<result property="numeroGuia" 					column="numero_guia" />
+		<result property="codPostaOrigen" 				column="psta_cdg_origen" />
+		<result property="descPostaOrigen" 				column="psta_dsc_origen" />
+		<result property="codPostaDestino" 				column="psta_cdg_destino" />
+		<result property="descPostaDestino" 			column="psta_dsc_destino" />
+		<result property="codigoProducto" 				column="prdt_cdg" />
+		<result property="nombreProducto" 				column="prdt_nmbr_espanol" />
+		<result property="codigoTipoServicio" 			column="tpsv_cdg" />
+		<result property="descTipoServicio" 			column="tpsv_dsc" />
+		<result property="codigoReferencia" 			column="rfrc_cdg" />
+		<result property="codigoPiezas" 				column="pzas_cdg" />
+		<result property="fechaMovimientoPiezas" 		column="pzmv_fch" />
+		<result property="codigoCargaTipoExcep" 		column="tpex_cdg" />
+		<result property="descCargaTipoExcep" 			column="tpex_dsc" />
+		<result property="codigoCargaTipoEvento" 		column="tpev_cdg" />
+		<result property="descCargaTipoEvento" 			column="tpev_dsc" />
+		<result property="codigoCargaPersonalizacion" 	column="prso_cdg" />
+		<result property="cantidadPiezasMovimiento" 	column="pzmv_cnt" />
+		<result property="pesoPiezasMovimiento" 		column="pzmv_peso" />
+		<result property="observPiezasMovimiento" 		column="pzmv_obs" />
+	</resultMap>
+
+	<parameterMap id="obtTrackRefPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoSucursalCliente" jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoTipoCliente" jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="fechaInicio" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="fechaFin" 			jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoReferencia" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtTrackRefRM" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTrackingReferencia" 
+	    	statementType="CALLABLE"
+			parameterMap="obtTrackRefPM"
+			resultMap="obtTrackRefRM">
+
+		{ call pck_tracking_operacional.get_tracking_referencia(?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_tracking_operacional.get_tracking_referencia -->
+
+
+
+</mapper>

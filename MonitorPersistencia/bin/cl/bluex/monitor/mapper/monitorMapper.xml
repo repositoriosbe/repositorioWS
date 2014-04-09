@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.monitor.mapper.MonitorMapper">
+
+	<!-- INICIO PKG_MONITOR.fnc_obtieneInformacionMonitor -->
+
+	<resultMap id="obtInfoMonitorRM" type="cl.bluex.monitor.to.DatosAgrupacionMonitorTO">
+		<result property="idAgrupacion" 			column="NroAtencion" />
+		<result property="ruta" 					column="Ruta" />
+		<result property="courier" 					column="Courier" />
+		<result property="fechaCreacionAgrupacion" 	column="Fecha" />
+		<result property="tipoBulto" 				column="Modo" />
+		<result property="cantidadEstimada" 		column="Cnt_Estimadas" />
+		<result property="cantidadIngresada" 		column="Cnt_Digitada" />
+		<result property="estado" 					column="Estado" />
+		<result property="totalPorSorter" 			column="Total_Bul_Digitados" />
+		<result property="voucher" 					column="Voucher" />
+	</resultMap>
+
+	<parameterMap id="obtInfoMonitorPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtInfoMonitorRM" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoSorter"  jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneInformacionMonitor" 
+	    statementType="CALLABLE"
+		parameterMap="obtInfoMonitorPM" 
+		resultMap="obtInfoMonitorRM">
+
+		{ ? = call pck_monitor.fnc_obtieneInformacionMonitor(?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_MONITOR.fnc_obtieneInformacionMonitor -->
+
+
+
+	
+</mapper>

@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.generadoretiqueta.mapper.GeneradorEtiquetaMapper">
+
+<!-- INICIO pck_generador_etiqueta.prc_obtieneDestino -->
+
+	<parameterMap id="destinoPM" type="map">
+		<parameter property="codigoEmpresa" 		jdbcType="VARCHAR" 		javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoNegocio" 	jdbcType="NUMERIC" 		javaType="long" 			mode="IN" />
+		<parameter property="codigoPosta" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoInfluencia" 		jdbcType="NUMERIC" 		javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoServicio" 	jdbcType="VARCHAR" 		javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoComuna" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="OUT" />
+		<parameter property="nombreComuna" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoZona" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoSubZona" 		jdbcType="VARCHAR" 		javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 		javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneDestino" 
+	    statementType="CALLABLE"
+		parameterMap="destinoPM">
+
+		{ call pck_generador_etiqueta.prc_generaCodigoBarra(?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_generador_etiqueta.prc_obtieneDestino -->
+
+<!-- INICIO PCK_ETIQUETACION_OPERACIONAL.prc_obtieneTemplate -->
+	<resultMap id="obtTemplRM" type="cl.bluex.generadoretiqueta.to.TemplateTO">
+		<result property="contenidoTemplate" column="imte_template" />
+	</resultMap>
+	
+	<parameterMap id="obtTemplPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" jdbcType="CURSOR"	 mode="OUT" resultMap="obtTemplRM" />
+		<parameter property="codigoUsuario" 	javaType="long" 			  jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoImpresora" 	javaType="long" 			  jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoFormatoImpresion" javaType="long" 		  jdbcType="INTEGER" mode="IN" />
+		<parameter property="tipoEtiqueta" 		javaType="java.lang.String"   jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneTemplate" 
+	    parameterMap="obtTemplPM"
+		statementType="CALLABLE"
+		resultMap="obtTemplRM">
+		{? = call PCK_ETIQUETACION_OPERACIONAL.fnc_obtieneTemplate(?,?,?,?,?,?)}
+	</select>
+	
+<!-- FIN PCK_ETIQUETACION_OPERACIONAL.prc_obtieneTemplate -->
+
+<!-- INICIO PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion -->
+	
+	<resultMap id="datosImpresion" type="cl.bluex.generadoretiqueta.to.DatosGeneracionEtiquetaTO">
+		<result property="basedest" 	column="p_basedest" />
+		<result property="bd" 			column="p_bd" />
+		<result property="c01" 			column="p_c01" />
+		<result property="c02" 			column="p_c02" />
+		<result property="c03" 			column="p_c03" />
+		<result property="c04" 			column="p_c04" />
+		<result property="c128_cb28l" 	column="p_c128_cb28l" />
+		<result property="c39_os" 		column="p_c39_os" />
+		<result property="cbl28"	 	column="p_cbl28" />
+		<result property="cde" 			column="p_cde" />
+		<result property="comuna" 		column="p_comuna" />
+		<result property="contacto_dest" column="p_contacto_dest" />
+		<result property="cta_cte" 		column="p_cta_cte" />
+		<result property="detcod01" 	column="p_detcod01" />
+		<result property="detcod02" 	column="p_detcod02" />
+		<result property="detcod03" 	column="p_detcod03" />
+		<result property="detcod04" 	column="p_detcod04" />
+		<result property="detcod05" 	column="p_detcod05" />
+		<result property="detdd01" 		column="p_detdd01" />
+		<result property="detdd02" 		column="p_detdd02" />
+		<result property="detdd03" 		column="p_detdd03" />
+		<result property="detdd04" 		column="p_detdd04" />
+		<result property="detdd05" 		column="p_detdd05" />
+		<result property="detdd06" 		column="p_detdd06" />
+		<result property="detdd07" 		column="p_detdd07" />
+		<result property="detdd08" 		column="p_detdd08" />
+		<result property="dims" 		column="p_dims" />
+		<result property="dir_dest1" 	column="p_dir_dest1" />
+		<result property="dir_emba" 	column="p_dir_emba" />
+		<result property="dir_emba1" 	column="p_dir_emba1" />
+		<result property="dir_emba2" 	column="p_dir_emba2" />
+		<result property="eop" 			column="p_eop" />
+		<result property="fch_impr" 	column="p_fch_impr" />
+		<result property="folio" 		column="p_folio" />
+		<result property="fono_dest" 	column="p_fono_dest" />
+		<result property="monto_cod" 	column="p_monto_cod" />
+		<result property="nmb_emba" 	column="p_nmb_emba" />
+		<result property="nmb_psta" 	column="p_nmb_psta" />
+		<result property="nomb_dest" 	column="p_nomb_dest" />
+		<result property="obs" 			column="p_obs" />
+		<result property="or" 			column="p_or" />
+		<result property="pdf417_cb2d_cod" column="p_pdf417_cb2d_cod" />
+		<result property="pdf417_cb2d_dd"  column="p_pdf417_cb2d_dd" />
+		<result property="pdf417_cb2d_os"  column="p_pdf417_cb2d_os" />
+		<result property="peso" 		column="p_peso" />
+		<result property="refer" 		column="p_refer" />
+		<result property="servicio" 	column="p_servicio" />
+		<result property="sr" 			column="p_sr" />
+		<result property="tbu" 			column="p_tbu" />
+	</resultMap>
+
+	<parameterMap id="parametrosImpresion" type="map">
+		<parameter property="eevvNmrId" javaType="long"  				jdbcType="NUMERIC" mode="IN" />
+		<parameter property="resultado" javaType="java.sql.ResultSet" 	jdbcType="CURSOR"  mode="OUT" resultMap="datosImpresion" />
+		<parameter property="codError"  javaType="int"  				jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" javaType="java.lang.String"   	jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+
+	<select id="obtieneDatosImpresion" 
+		parameterMap="parametrosImpresion"
+		statementType="CALLABLE">
+		{call
+		PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion(?,?,?,?)}
+	</select>
+	
+<!-- FIN PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion -->
+
+
+<!-- INICIO PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion_hub -->
+	
+	<resultMap id="obtDatosImprHubRM" type="cl.bluex.generadoretiqueta.to.DatosGeneracionEtiquetaHubTO">
+		<result property="empresa" 			column="p_empresa" />
+		<result property="fecha" 			column="p_fecha" />
+		<result property="inftecetiqueta" 	column="p_inftecetiqueta" />
+		<result property="codigocomp" 		column="p_codigocomp" />
+		<result property="subzona" 			column="p_subzona" />
+		<result property="servicio" 		column="p_servicio" />
+		<result property="codserv" 			column="p_codserv" />
+		<result property="codposta" 		column="p_codposta" />
+		<result property="posta" 			column="p_posta" />
+		<result property="folio" 			column="p_folio" />
+		<result property="dimension" 		column="p_dimension" />
+		<result property="total" 			column="p_total" />
+		<result property="grupoid" 			column="p_grupoid" />
+		<result property="comunaine" 		column="p_comunaine" />
+	</resultMap>
+
+	<parameterMap id="obtDPM" type="map">
+		<parameter property="eevvNmrId" javaType="long"  jdbcType="NUMERIC" mode="IN" />
+		<parameter property="resultado" javaType="java.sql.ResultSet" jdbcType="CURSOR"  mode="OUT" resultMap="obtDatosImprHubRM" />
+		<parameter property="codError"  javaType="int"  jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" javaType="java.lang.String"   jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+
+	<select id="obtieneDatosImpresionHub" 
+		parameterMap="obtDPM"
+		resultMap="obtDatosImprHubRM"
+		statementType="CALLABLE">
+		{call
+		PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion_hub(?,?,?,?)}
+	</select>
+	
+<!-- FIN PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion_hub -->
+
+
+	<resultMap id="obtGuiaRM" type="cl.bluex.generadoretiqueta.to.GuiaTO">
+		<result property="folioGuia" 	column="eevv_nmr_serie" />
+		<result property="eevvId" 		column="eevv_nmr_id" />
+		<result property="idEncabezado" column="voucher" />
+		<result property="cantidad" 	column="bulto" />
+	</resultMap>
+	
+<!-- INICIO pck_generador_etiqueta.gettraervouchereevv -->
+	<resultMap id="obtGuiaPorEncRM" type="cl.bluex.generadoretiqueta.to.GuiaTO">
+		<result property="folioGuia" 		column="eevv_nmr_serie" />
+		<result property="eevvId" 			column="eevv_nmr_id" />
+		<result property="idEncabezado" 	column="voucher" />
+		<result property="cantidad" 		column="bulto" />
+		<result property="codigoCompuesto" 	column="codigo_compuesto" />
+	</resultMap>
+	
+	<parameterMap id="obtGuiaPorEncPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" 	jdbcType="CURSOR"  mode="OUT" resultMap="obtGuiaPorEncRM" />
+		<parameter property="idEncabezado" 		javaType="int" 			  		jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  	jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   	jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneGuiasPorEncabezado" 
+	    parameterMap="obtGuiaPorEncPM"
+	    resultMap="obtGuiaPorEncRM"
+		statementType="CALLABLE">
+		{? = call pck_generador_etiqueta.gettraervouchereevv(?,?,?)}
+	</select>
+	
+<!-- FIN pck_generador_etiqueta.gettraervouchereevv -->
+
+
+<!-- INICIO pck_generador_etiqueta.gettraereevv -->
+	<parameterMap id="obtGuiaPorFolPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" 	jdbcType="CURSOR"	 	mode="OUT" resultMap="obtGuiaRM" />
+		<parameter property="tipoDocumento" 	javaType="java.lang.String" 	jdbcType="VARCHAR" 		mode="IN" />
+		<parameter property="numeroFolio" 		javaType="long" 			  	jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codigoEmpresa" 	javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="nroBulto" 			javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  	jdbcType="NUMERIC" 		mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   	jdbcType="VARCHAR" 		mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneGuiasPorFolio" 
+	    parameterMap="obtGuiaPorFolPM"
+	    resultMap="obtGuiaRM"
+		statementType="CALLABLE">
+		{? = call pck_generador_etiqueta.gettraereevv(?,?,?,?,?,?)}
+	</select>
+	
+<!-- FIN pck_generador_etiqueta.gettraereevv -->
+
+<!-- INICIO pck_generador_etiqueta.gettraeeevvreferencia -->
+	<parameterMap id="obtGuiaPorRefPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" 	jdbcType="CURSOR"	 	mode="OUT" resultMap="obtGuiaRM" />
+		<parameter property="numeroReferencia" 	javaType="java.lang.String" 	jdbcType="VARCHAR" 		mode="IN" />
+		<parameter property="codigoEmpresa" 	javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codigoCliente" 	javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codigoSucursalCliente" javaType="int" 			  	jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codigoTipoCliente" javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  	jdbcType="NUMERIC" 		mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   	jdbcType="VARCHAR" 		mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneGuiasPorReferencia" 
+	    parameterMap="obtGuiaPorRefPM"
+	    resultMap="obtGuiaRM"
+		statementType="CALLABLE">
+		{? = call pck_generador_etiqueta.gettraeeevvreferencia(?,?,?,?,?,?,?)}
+	</select>
+	
+<!-- FIN pck_generador_etiqueta.gettraeeevvreferencia -->
+
+<!-- INICIO pck_generador_etiqueta.gettraecodigopieza -->
+	<parameterMap id="obtGuiasPiezaPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" 	jdbcType="CURSOR"	 	mode="OUT" resultMap="obtGuiaRM" />
+		<parameter property="codigoEmpresaTrad" javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="tipoDocumento" 	javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="numeroFolio" 		javaType="long" 			  	jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="nroBulto" 			javaType="int" 			  		jdbcType="NUMERIC" 		mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  	jdbcType="NUMERIC" 		mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   	jdbcType="VARCHAR" 		mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneGuiasPorPieza" 
+	    parameterMap="obtGuiasPiezaPM"
+	    resultMap="obtGuiaRM"
+		statementType="CALLABLE">
+		{? = call pck_generador_etiqueta.gettraecodigopieza(?,?,?,?,?,?)}
+	</select>
+	
+<!-- FIN pck_generador_etiqueta.gettraecodigopieza -->
+
+<!-- INICIO pck_generador_etiqueta.gettraeoser -->
+	<resultMap id="obtOrdServRM" type="cl.bluex.generadoretiqueta.to.OrdenServicioTO">
+		<result property="numeroSerieOser" 	column="eevv_nmr_serie" />
+		<result property="numeroIdOser" 	column="eevv_nmr_id" />
+		<result property="cantidadPiezas" 	column="oser_cnt_piezas" />
+		<result property="codigoCompuesto" 	column="codigo_compuesto" />
+	</resultMap>
+	
+	<parameterMap id="obtOrdServPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" 	jdbcType="CURSOR"  mode="OUT" resultMap="obtOrdServRM" />
+		<parameter property="numeroSerieOser" 	javaType="java.lang.String"	  	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tipoDocumento" 	javaType="java.lang.String" 	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoEmpresa" 	javaType="int" 			  		jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  	jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   	jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneOrdenesServicio" 
+	    parameterMap="obtOrdServPM"
+	    resultMap="obtOrdServRM"
+		statementType="CALLABLE">
+		{? = call pck_generador_etiqueta.gettraeoser(?,?,?,?,?)}
+	</select>
+	
+<!-- FIN pck_generador_etiqueta.gettraeoser -->
+
+<!-- INICIO pck_generador_etiqueta.get_codigo_bulto_l28 -->
+	<resultMap id="obtCodBultoL28RM" type="cl.bluex.generadoretiqueta.to.CodigoBultoTO">
+		<result property="codigoBulto" 		column="digito_normalizador" />
+		<result property="nmrEmpresa" 		column="trad_empr" />
+		<result property="tipoDocumento" 	column="trad_tipo_doc" />
+		<result property="nmrMaxOs" 		column="ceros_compuesto" />
+		<result property="nmrDocumento" 	column="eevv_serie" />
+		<result property="checkSumDocto" 	column="check_sum" />
+		<result property="nmrBultos" 		column="cnt_piezas" />
+		<result property="codigoProducto" 	column="trad_prod" />
+		<result property="codigoServicio" 	column="trad_serv" />
+		<result property="manipulacion" 	column="trad_mnpl" />
+		<result property="nmrPais" 			column="pses_cdg" />
+		<result property="nmrComuna" 		column="zona" />
+		<result property="nmrSubdivision" 	column="subzona" />
+	</resultMap>
+	
+	<parameterMap id="obtCodBultoL28PM" type="map">
+		<parameter property="numeroSerieOser" 	javaType="long" 			  	jdbcType="NUMERIC" mode="IN" />
+		<parameter property="tipoDocumento" 	javaType="java.lang.String" 	jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoEmpresa" 	javaType="int" 			  		jdbcType="NUMERIC" mode="IN" />
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" 	jdbcType="CURSOR"  mode="OUT" resultMap="obtCodBultoL28RM" />
+		<parameter property="codError" 			javaType="int"  			  	jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   	jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneCodigoBultoL28" 
+	    parameterMap="obtCodBultoL28PM"
+	    resultMap="obtCodBultoL28RM"
+		statementType="CALLABLE">
+		{call PCK_ETIQUETACION_OPERACIONAL.get_codigo_bulto_l28(?,?,?,?,?,?)}
+	</select>
+	
+<!-- FIN pck_generador_etiqueta.get_codigo_bulto_l28 -->
+
+<!-- INICIO  pck_operacion_sorter.valida_usuario-->
+	<resultMap id="obtDatosOperacionalesRM" type="cl.bluex.generadoretiqueta.to.DatosOperacionalesTO">
+		<result property="codigo_currier" 	column="prso_cdg" />
+		<result property="courier" 			column="prso_nmbr_persona" />
+		<result property="oficina" 			column="ofcn_cdg" />
+		<result property="bodega" 			column="bdga_cdg" />
+		<result property="tipoBodega" 		column="tpbd_cdg" />
+		<result property="message" 			column="osqlmsjerror"/>
+		
+	</resultMap>
+	
+	<parameterMap id="obtDatosOperacionalesPM" type="map">
+		<parameter property="nombreUsuario"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigo_currier" 	javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="courier" 			javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="oficina" 			javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="bodega" 			javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="tipoBodega" 		javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="message"			javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+		
+	</parameterMap>
+	
+	<select id="obtieneDatosOperacionales" 
+	    parameterMap="obtDatosOperacionalesPM"
+	    resultMap="obtDatosOperacionalesRM"
+		statementType="CALLABLE">
+		{call  pck_operacion_sorter.valida_usuario(?,?,?,?,?,?,?)}
+	</select>
+<!-- FIN  pck_operacion_sorter.valida_usuario -->
+
+
+<!-- INICIO PCK_INSERTA_PINCHAZO.inserta_evento_pzmv-->
+	<resultMap id="insertaPiezaMovimientoRM" type="cl.bluex.generadoretiqueta.to.PiezaMovimientoTO">
+		<result property="codigo" 	column="oresultado" />
+		<result property="message" 	column="osqlmsjerror"/>
+	</resultMap>
+	
+	<parameterMap id="insertaPiezaMovimientoPM" 	type="map">
+		<parameter property="codigoPieza"				javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="observacion"				javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoTipoEvento"			javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoBodegaEntrada"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tipoCodigoBodegaEntrada"	javaType="int"					jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoOficinaEntrada"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoPersona"				javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="fechaMovimiento"			javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="cantidadPiezas"			javaType="int"					jdbcType="NUMERIC" mode="IN" />
+		<parameter property="pesoFisico"				javaType="float"				jdbcType="NUMERIC" mode="IN" />
+		<parameter property="responsable.nombre"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="responsable.rut"			javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="foto.nombre"				javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="responsable.telefono"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="foto.fechaEnvio"			javaType="java.lang.String"		jdbcType="DATE"	   mode="IN" />	
+		<parameter property="responsable.descripcion"	javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="responsable.motivo"		javaType="int"					jdbcType="NUMERIC" mode="IN" />	
+		<parameter property="ruta.patente"				javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="ruta.numeroOdometro"		javaType="int"					jdbcType="NUMERIC" mode="IN" />
+		<parameter property="ruta.codigo"				javaType="int"					jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoPosta"				javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoTipoNegocio"			javaType="int"					jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoTipoEstado"			javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoTipoServicio"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigoTipoServicioPadre"	javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigo"					javaType="int"					jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="message"					javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="insertaPiezaMovimiento" 
+	    parameterMap="insertaPiezaMovimientoPM"
+	    resultMap="insertaPiezaMovimientoRM"
+		statementType="CALLABLE">
+		{call pck_operacion_sorter.Inserta_EventoExcepcion(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+<!-- FIN PCK_INSERTA_PINCHAZO.inserta_evento_pzmv -->
+
+
+<!-- INICIO  pck_operacion_sorter.prc_valida_oficina_bodega-->
+	<resultMap id="validaOficinaBodegaRM" type="cl.bluex.generadoretiqueta.to.DatosOperacionalesTO">
+		<result property="codigo" 	column="oresultado" />
+		<result property="message" 	column="osqlmsjerror"/>
+	</resultMap>
+	
+	<parameterMap id="validaOficinaBodegaPM" type="map">
+		<parameter property="codigoOficina"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="tipoBodega" 		javaType="int"					jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoBodega"		javaType="java.lang.String"		jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codigo"			javaType="int"					jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="message"			javaType="java.lang.String"		jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="validaOficinaBodega" 
+	    parameterMap="validaOficinaBodegaPM"
+	    resultMap="validaOficinaBodegaRM"
+		statementType="CALLABLE">
+		{call  pck_operacion_sorter.prc_valida_oficina_bodega(?,?,?,?,?)}
+	</select>
+<!-- FIN  pck_operacion_sorter.prc_valida_oficina_bodega -->
+
+
+
+
+</mapper>

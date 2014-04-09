@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://ws.bluex.cl:9176/bluexlib/xsd/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://ws.bluex.cl:9176/bluexlib/xsd/spring-context-3.0.xsd
+						   http://www.springframework.org/schema/aop
+                           http://ws.bluex.cl:9176/bluexlib/xsd/spring-aop-3.0.xsd
+						   http://www.springframework.org/schema/tx
+                           http://ws.bluex.cl:9176/bluexlib/xsd/spring-tx-3.0.xsd"
+	default-autowire="byName">
+      
+    <bean id="sqlSessionFactory" class="cl.bluex.ws.common.spring.MyBatisSession">
+	    <property name="config" value="cl/bluex/seguridad/config/mybatis.config.xml" />
+	  </bean>
+
+  	<bean id="DaoFactory" class="cl.bluex.seguridad.factory.DaoFactoryBean">
+    	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+  	</bean>
+    
+</beans>

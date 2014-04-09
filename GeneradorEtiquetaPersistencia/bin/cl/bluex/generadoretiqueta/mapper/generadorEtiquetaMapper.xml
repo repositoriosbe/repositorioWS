@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.generadoretiqueta.mapper.GeneradorEtiquetaMapper">
+
+<!-- INICIO pck_generador_etiqueta.prc_obtieneDestino -->
+
+	<parameterMap id="destinoPM" type="map">
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 		javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoNegocio" 	jdbcType="NUMERIC" 		javaType="long" 			mode="IN" />
+		<parameter property="codigoPosta" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoInfluencia" 		jdbcType="NUMERIC" 		javaType="long" 			mode="IN" />
+		<parameter property="codigoDestino" 		jdbcType="VARCHAR" 		javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 		javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 		javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneDestino" 
+	    statementType="CALLABLE"
+		parameterMap="destinoPM">
+
+		{ call pck_generador_etiqueta.prc_generaCodigoBarra(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_generador_etiqueta.prc_obtieneDestino -->
+
+<!-- INICIO EXEMISION.PCK_ETIQUETACION_OPERACIONAL.prc_obtieneTemplate -->
+	<resultMap id="obtTemplRM" type="cl.bluex.generadoretiqueta.to.TemplateTO">
+		<result property="contenidoTemplate" column="imte_template" />
+	</resultMap>
+	
+	<parameterMap id="obtTemplPM" type="map">
+		<parameter property="resultado" 		javaType="java.sql.ResultSet" jdbcType="CURSOR"	 mode="OUT" resultMap="obtTemplRM" />
+		<parameter property="codigoUsuario" 	javaType="long" 			  jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoImpresora" 	javaType="long" 			  jdbcType="NUMERIC" mode="IN" />
+		<parameter property="codigoFormatoImpresion" javaType="long" 		  jdbcType="INTEGER" mode="IN" />
+		<parameter property="tipoEtiqueta" 		javaType="java.lang.String"   jdbcType="VARCHAR" mode="IN" />
+		<parameter property="codError" 			javaType="int"  			  jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" 		javaType="java.lang.String"   jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	
+	<select id="obtieneTemplate" 
+	    parameterMap="obtTemplPM"
+		statementType="CALLABLE"
+		resultMap="obtTemplRM">
+		{? = call EXEMISION.PCK_ETIQUETACION_OPERACIONAL.fnc_obtieneTemplate(?,?,?,?,?,?)}
+	</select>
+	
+<!-- FIN EXEMISION.PCK_ETIQUETACION_OPERACIONAL.prc_obtieneTemplate -->
+
+<!-- INICIO EXEMISION.PCK_ETIQUETACION_OPERACIONAL.prc_obtieneTemplate -->
+	
+	<resultMap id="datosImpresion" type="cl.bluex.generadoretiqueta.to.DatosGeneracionEtiquetaTO">
+		<result property="basedest" 	column="p_basedest" />
+		<result property="bd" 			column="p_bd" />
+		<result property="c01" 			column="p_c01" />
+		<result property="c02" 			column="p_c02" />
+		<result property="c03" 			column="p_c03" />
+		<result property="c04" 			column="p_c04" />
+		<result property="c128_cb28l" 	column="p_c128_cb28l" />
+		<result property="c39_os" 		column="p_c39_os" />
+		<result property="cbl28"	 	column="p_cbl28" />
+		<result property="cde" 			column="p_cde" />
+		<result property="comuna" 		column="p_comuna" />
+		<result property="contacto_dest" column="p_contacto_dest" />
+		<result property="cta_cte" 		column="p_cta_cte" />
+		<result property="detcod01" 	column="p_detcod01" />
+		<result property="detcod02" 	column="p_detcod02" />
+		<result property="detcod03" 	column="p_detcod03" />
+		<result property="detcod04" 	column="p_detcod04" />
+		<result property="detcod05" 	column="p_detcod05" />
+		<result property="detdd01" 		column="p_detdd01" />
+		<result property="detdd02" 		column="p_detdd02" />
+		<result property="detdd03" 		column="p_detdd03" />
+		<result property="detdd04" 		column="p_detdd04" />
+		<result property="detdd05" 		column="p_detdd05" />
+		<result property="detdd06" 		column="p_detdd06" />
+		<result property="detdd07" 		column="p_detdd07" />
+		<result property="detdd08" 		column="p_detdd08" />
+		<result property="dims" 		column="p_dims" />
+		<result property="dir_dest1" 	column="p_dir_dest1" />
+		<result property="dir_emba" 	column="p_dir_emba" />
+		<result property="dir_emba1" 	column="p_dir_emba1" />
+		<result property="dir_emba2" 	column="p_dir_emba2" />
+		<result property="eop" 			column="p_eop" />
+		<result property="fch_impr" 	column="p_fch_impr" />
+		<result property="folio" 		column="p_folio" />
+		<result property="fono_dest" 	column="p_fono_dest" />
+		<result property="monto_cod" 	column="p_monto_cod" />
+		<result property="nmb_emba" 	column="p_nmb_emba" />
+		<result property="nmb_psta" 	column="p_nmb_psta" />
+		<result property="nomb_dest" 	column="p_nomb_dest" />
+		<result property="obs" 			column="p_obs" />
+		<result property="or" 			column="p_or" />
+		<result property="pdf417_cb2d_cod" column="p_pdf417_cb2d_cod" />
+		<result property="pdf417_cb2d_dd"  column="p_pdf417_cb2d_dd" />
+		<result property="pdf417_cb2d_os"  column="p_pdf417_cb2d_os" />
+		<result property="peso" 		column="p_peso" />
+		<result property="refer" 		column="p_refer" />
+		<result property="servicio" 	column="p_servicio" />
+		<result property="sr" 			column="p_sr" />
+		<result property="tbu" 			column="p_tbu" />
+	</resultMap>
+
+	<parameterMap id="parametrosImpresion" type="map">
+		<parameter property="eevvNmrId" javaType="java.lang.Integer"  jdbcType="NUMERIC" mode="IN" />
+		<parameter property="resultado" javaType="java.sql.ResultSet" jdbcType="CURSOR"  mode="OUT" resultMap="datosImpresion" />
+		<parameter property="codError"  javaType="java.lang.Integer"  jdbcType="NUMERIC" mode="OUT" />
+		<parameter property="descError" javaType="java.lang.String"   jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+
+	<select id="obtieneDatosImpresion" 
+		parameterMap="parametrosImpresion"
+		statementType="CALLABLE">
+		{call
+		EXEMISION.PCK_ETIQUETACION_OPERACIONAL.get_consulta_impresion(?,?,?,?)}
+	</select>
+	
+<!-- FIN EXEMISION.PCK_ETIQUETACION_OPERACIONAL.prc_obtieneTemplate -->
+
+
+</mapper>

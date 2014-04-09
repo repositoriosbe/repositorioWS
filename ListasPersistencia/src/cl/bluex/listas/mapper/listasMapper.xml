@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.listas.mapper.ListasMapper">
+
+<!-- PKG_DIGITACION.fnc_obtieneEmpresas -->
+
+	<resultMap id="empresasRM" type="cl.bluex.digmodel.to.EmpresaTO">
+		<result property="codigo" 		column="EMPR_CDG" />
+		<result property="descripcion" 	column="EMPR_RZN_SOCIAL" />
+	</resultMap>
+
+	<parameterMap id="empresasPM" type="map">
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="empresasRM" />
+		<parameter property="codigoUsuario" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoSistema" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoAplicacion" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneEmpresas" 
+	    	statementType="CALLABLE"
+			parameterMap="empresasPM" 
+			resultMap="empresasRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneEmpresas(?,?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneEmpresas -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneTipoDocumentos -->
+	<resultMap id="tipoDocumentosRM" type="cl.bluex.digmodel.to.TipoDocumentoTO">
+		<result property="codigo" 		column="fevl_cdg" />
+		<result property="descripcion" 	column="fevl_dsc" />
+	</resultMap>
+
+	<parameterMap id="tipoDocumentosPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"  javaType="java.sql.ResultSet" mode="OUT" resultMap="tipoDocumentosRM" />
+		<parameter property="codError" 	jdbcType="NUMERIC" javaType="int" 				 mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" javaType="java.lang.String" 	 mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTipoDocumentos" 
+	    statementType="CALLABLE"
+		parameterMap="tipoDocumentosPM" 
+		resultMap="tipoDocumentosRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTipoDocumentos(?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneTipoDocumentos -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtienePaises -->
+	<resultMap id="paisesRM" type="cl.bluex.digmodel.to.PaisTO">
+		<result property="codigo" 		column="pses_cdg_iso" />
+		<result property="descripcion" 	column="pses_nmbr" />
+		<result property="codigoMoneda" column="mnds_cdg_iso_char" />
+	</resultMap>
+
+	<parameterMap id="paisesPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="paisesRM" />
+		<parameter property="codigo" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 	jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtienePaises" 
+	    statementType="CALLABLE"
+		parameterMap="paisesPM" 
+		resultMap="paisesRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtienePaises(?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtienePaises -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneComunas -->
+	<resultMap id="comunasRM" type="cl.bluex.digmodel.to.ComunaTO">
+		<result property="codigo" 		column="cmns_cdg_ine" />
+		<result property="descripcion" 	column="cmns_nmb" />
+	</resultMap>
+
+	<parameterMap id="comunasPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="comunasRM" />
+		<parameter property="codigoPais" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoPosta" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneComunas" 
+	    statementType="CALLABLE"
+		parameterMap="comunasPM" 
+		resultMap="comunasRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneComunas(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneComunas -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtienePostas -->
+
+	<resultMap id="postasRM" type="cl.bluex.digmodel.to.PostaTO">
+		<result property="codigo" 		column="psta_cdg" />
+		<result property="descripcion" 	column="psta_dsc" />
+		<result property="codigoRegion" column="rgns_cdg" />
+	</resultMap>
+
+	<parameterMap id="postasPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="postasRM" />
+		<parameter property="codigo" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="tipoNegocio" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtienePostas" statementType="CALLABLE"
+		parameterMap="postasPM" resultMap="postasRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtienePostas(?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtienePostas -->
+	
+	<!-- INICIO PKG_DIGITACION.fnc_obtienePostasComunas -->
+
+	<resultMap id="postasComunasRM" type="cl.bluex.digmodel.to.PostaTO">
+		<result property="codigo" column="psta_cdg" />
+		<result property="descripcion" column="psta_dsc" />
+		<result property="codigoComuna" column="cmns_cdg_ine" />
+		<result property="comuna" column="cmns_nmb" />
+		
+	</resultMap>
+
+	<parameterMap id="postasComunasPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="postasComunasRM" />
+		<parameter property="codigo" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="tipoNegocio" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="comuna" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtienePostasComunas" 
+	    statementType="CALLABLE"
+		parameterMap="postasComunasPM" 
+		resultMap="postasComunasRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtienePostasComunas(?,?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtienePostasComunas -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneRutas -->
+
+	<resultMap id="rutasRM" type="cl.bluex.digmodel.to.RutaTO">
+		<result property="codigo" 		column="cgrt_cdg" />
+		<result property="descripcion" 	column="cgrt_dsc" />
+	</resultMap>
+
+	<parameterMap id="rutasPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet"	mode="OUT" resultMap="rutasRM" />
+		<parameter property="codigo" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneRutas" 
+		statementType="CALLABLE" 
+		parameterMap="rutasPM"
+		resultMap="rutasRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneRutas(?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneRutas -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneLocalidades -->
+
+	<resultMap id="localidadesRM" type="cl.bluex.digmodel.to.LocalidadTO">
+		<result property="codigoPosta" 						column="psta_cdg_padre" />
+		<result property="codigo" 							column="psta_cdg" />
+		<result property="descripcion" 						column="psta_dsc" />
+		<result property="codigoComuna" 					column="cmns_cdg_ine" />
+		<result property="descripcionComuna" 				column="cmns_nmb" />
+		<result property="codigoTipoRadioInfluencia" 		column="tpri_cdg" />
+		<result property="descripcionTipoRadioInfluencia" 	column="tpri_dsc" />
+	</resultMap>
+
+	<parameterMap id="localidadesPM" type="map">
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" mode="OUT" resultMap="localidadesRM" />
+		<parameter property="codigoPais" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPostaPadre" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoNegocio" jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoInfluencia" jdbcType="NUMERIC" javaType="long" 			mode="IN" />
+		<parameter property="codigoComuna" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneLocalidades" 
+	    statementType="CALLABLE" 
+	    parameterMap="localidadesPM"
+		resultMap="localidadesRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneLocalidades(?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneLocalidades -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneTraduccion -->
+
+	<resultMap id="traduccionesRM" type="cl.bluex.digmodel.to.TraduccionTO">
+		<result property="codigoOrigen" 		column="cdex_cdg_origen" />
+		<result property="descripcionOrigen" 	column="cdex_desc_origen" />
+		<result property="codigoTraducido" 		column="cdex_cdg_traducido" />
+		<result property="descripcionTraducido" column="cdex_desc_traducido" />
+	</resultMap>
+
+	<parameterMap id="traduccionesPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="traduccionesRM" />
+		<parameter property="tipo" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC" javaType="long" 				mode="IN" />
+		<parameter property="codigo" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneTraduccion" 
+			statementType="CALLABLE"
+			parameterMap="traduccionesPM" 
+			resultMap="traduccionesRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTraduccion(?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneTraduccion -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneProductos -->
+	<resultMap id="productosRM" type="cl.bluex.digmodel.to.ProductoTO">
+		<result property="codigo" 				column="prdt_cdg" />
+		<result property="descripcion" 			column="prdt_nmbr_espanol" />
+		<result property="codigoFamilia" 		column="fmpr_cdg" />
+		<result property="descripcionFamilia" 	column="fmpr_nmbr_espanol" />
+	</resultMap>
+
+	<parameterMap id="productosPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="productosRM" />
+		<parameter property="codigoFamilia" jdbcType="VARCHAR"
+			javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneProductos" 
+		statementType="CALLABLE"
+		parameterMap="productosPM" 
+		resultMap="productosRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneProductos(?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneProductos -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneProductos -->
+
+	<resultMap id="familiaProductosRM" type="cl.bluex.digmodel.to.FamiliaProductoTO">
+		<result property="codigo" column="fmpr_cdg" />
+		<result property="descripcion" column="fmpr_nmbr_espanol" />
+	</resultMap>
+
+	<parameterMap id="familiaProductosPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="familiaProductosRM" />
+	</parameterMap>
+
+	<select id="obtieneFamiliaProductos" 
+		statementType="CALLABLE"
+		parameterMap="familiaProductosPM" 
+		resultMap="familiaProductosRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneFamiliaProductos()}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneProductos -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtienetipoServicios -->
+
+	<resultMap id="tipoServiciosRM" type="cl.bluex.digmodel.to.TipoServicioTO">
+		<result property="codigo" 			column="tpsv_cdg" />
+		<result property="descripcion" 		column="tpsv_dsc" />
+		<result property="impuesto" 		column="serv_impto" />
+		<result property="codigoEmpresa" 	column="empr_cdg" />
+	</resultMap>
+
+	<parameterMap id="tipoServiciosPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="tipoServiciosRM" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="tipo" 			jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneTipoServicios" 
+	    statementType="CALLABLE"
+		parameterMap="tipoServiciosPM" 
+		resultMap="tipoServiciosRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtienetipoServicios(?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtienetipoServicios -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtienePerUsuario -->
+
+	<resultMap id="personalizacionRM"
+		type="cl.bluex.digmodel.to.PersonalizacionUsuarioTO">
+		<result property="nombreCampo" column="prus_nombre_campo" />
+		<result property="campoNumber" column="prus_number" />
+		<result property="campoString" column="prum_varchar" />
+	</resultMap>
+
+	<parameterMap id="personalizacionPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="personalizacionRM" />
+		<parameter property="codigoUsuario" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+	</parameterMap>
+
+	<select id="obtienePersonalizacionesUsuario" 
+		statementType="CALLABLE"
+		parameterMap="personalizacionPM" 
+		resultMap="personalizacionRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtienePerUsuario(?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtienePerUsuario -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneTipoDocCliente -->
+
+	<resultMap id="tipoDocClienteRM" type="cl.bluex.digmodel.to.TipoDocumentoClienteTO">
+		<result property="codigo" column="tdsc_cdg" />
+		<result property="descripcion" column="tdsc_dsc" />
+	</resultMap>
+
+	<parameterMap id="tipoDocClientePM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="tipoDocClienteRM" />
+	</parameterMap>
+
+	<select id="obtieneTipoDocumentosCliente" statementType="CALLABLE"
+		parameterMap="tipoDocClientePM" resultMap="tipoDocClienteRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTipoDocCliente()}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneTipoDocCliente -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneTpFormPagoCliente -->
+
+	<resultMap id="tipoFormaPagoClienteRM" type="cl.bluex.digmodel.to.TipoFormaPagoClienteTO">
+		<result property="codigo" column="tpfp_cdg" />
+		<result property="descripcion" column="tpfp_dsc" />
+	</resultMap>
+
+	<parameterMap id="tipoFormaPagoClientePM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="tipoFormaPagoClienteRM" />
+	</parameterMap>
+
+	<select id="obtieneTipoFormaPagoCliente" statementType="CALLABLE"
+		parameterMap="tipoFormaPagoClientePM" resultMap="tipoFormaPagoClienteRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTpFormPagoCliente()}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneTpFormPagoCliente -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneBancos -->
+
+	<resultMap id="bancoRM" type="cl.bluex.digmodel.to.BancoTO">
+		<result property="codigo" column="bnco_cdg" />
+		<result property="descripcion" column="bnco_nmb" />
+	</resultMap>
+
+	<parameterMap id="bancoPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="bancoRM" />
+	</parameterMap>
+
+	<select id="obtieneBancos" 
+	    	statementType="CALLABLE"
+			parameterMap="bancoPM" 
+			resultMap="bancoRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneBancos()}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneBancos -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneDiasPago -->
+
+	<resultMap id="diasPagoRM" type="cl.bluex.digmodel.to.DiaPagoTO">
+		<result property="codigo" column="ddpg_id_dias_pago" />
+		<result property="descripcion" column="ddpg_desc_dias_pago" />
+	</resultMap>
+
+	<parameterMap id="diasPagoPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="diasPagoRM" />
+	</parameterMap>
+
+	<select id="obtieneDiasPago" statementType="CALLABLE"
+		parameterMap="diasPagoPM" resultMap="diasPagoRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneDiasPago()}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneDiasPago -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneMonedas -->
+
+	<resultMap id="monedaRM" type="cl.bluex.digmodel.to.MonedaTO">
+		<result property="codigo" 		column="mnds_cdg_iso_char" />
+		<result property="descripcion" 	column="mnds_dsc" />
+	</resultMap>
+
+	<parameterMap id="monedaPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="monedaRM" />
+	</parameterMap>
+
+	<select id="obtieneMonedas" statementType="CALLABLE"
+		parameterMap="monedaPM" resultMap="monedaRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneMonedas()}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneMonedas -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneOficinas -->
+
+	<resultMap id="oficinasRM" type="cl.bluex.digmodel.to.OficinaTO">
+		<result property="codigoEmpresa" 	column="empr_cdg" />
+		<result property="codigo" 			column="ofcn_cdg" />
+		<result property="descripcion" 		column="ofcn_dsc" />
+		<result property="codigoPosta" 		column="psta_cdg" />
+		<result property="codigoCliente" 	column="clhl_cdg" />
+		<result property="codigoSucursal" 	column="clhl_scrs" />
+		<result property="codigoTipoCliente" column="tpcl_cdg" />
+	</resultMap>
+
+	<parameterMap id="oficinasPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" 	resultMap="oficinasRM" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoPosta" 	jdbcType="VARCHAR"	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneOficinas" 
+	    	statementType="CALLABLE"
+			parameterMap="oficinasPM" 
+			resultMap="oficinasRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneOficinas(?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneOficinas -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneCentrosCosto -->
+	<resultMap id="centroCostoRM" type="cl.bluex.digmodel.to.CentroCostoTO">
+		<result property="centroCosto" 	column="ccpf_cdg" />
+	</resultMap>
+
+	<parameterMap id="centroCostoPM" type="map">
+		<parameter property="resultado" 			jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" 	resultMap="centroCostoRM" />
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="long" 		mode="IN" />
+		<parameter property="codigoCliente" 		jdbcType="NUMERIC" 	javaType="long" 		mode="IN" />
+		<parameter property="codigoSucursalCliente" jdbcType="NUMERIC" 	javaType="long" 		mode="IN" />
+		<parameter property="codigoTipoCliente" 	jdbcType="NUMERIC" 	javaType="long" 		mode="IN" />
+		<parameter property="codigoCentroCosto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC"  javaType="int" 			mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR"  javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneCentrosCosto" 
+	    statementType="CALLABLE"
+		parameterMap="centroCostoPM"
+		resultMap="centroCostoRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneCentrosCosto(?,?,?,?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneCentrosCosto -->
+	
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneConversiones -->
+
+	<resultMap id="obtConverRM" type="cl.bluex.digmodel.to.ConversionTO">
+		<result property="codigo" 		column="cdex_cdg_traducido" />
+		<result property="descripcion" 	column="cdex_desc_traducido" />
+	</resultMap>
+
+	<parameterMap id="obtConverPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtConverRM" />
+		<parameter property="tipo" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC" javaType="long" 				mode="IN" />
+		<parameter property="codError" 	jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneConversiones" 
+	    statementType="CALLABLE"
+		parameterMap="obtConverPM" 
+		resultMap="obtConverRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneConversiones(?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneConversiones -->
+	
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneTipoInfluencias -->
+
+	<resultMap id="obtTpInfluenRM" type="cl.bluex.digmodel.to.TipoInfluenciaTO">
+		<result property="codigo" 				column="cdg_influencia" />
+		<result property="nombreTipoInfluencia" column="desc_influencia" />
+	</resultMap>
+
+	<parameterMap id="obtTpInfluenPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtTpInfluenRM" />
+		<parameter property="codError" 	jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTipoInfluencias" 
+	    statementType="CALLABLE"
+		parameterMap="obtTpInfluenPM" 
+		resultMap="obtTpInfluenRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTipoInfluencias(?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneTipoInfluencias -->
+	
+<!-- INICIO PKG_DIGITACION.fnc_obtieneTipoNegocios -->
+
+	<resultMap id="obtTpNegRM" type="cl.bluex.digmodel.to.TipoNegocioTO">
+		<result property="codigo" 				column="cdg_tpng" />
+		<result property="nombreTipoNegocio" 	column="dsc_tpng" />
+	</resultMap>
+
+	<parameterMap id="obtTpNegPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtTpNegRM" />
+		<parameter property="codError" 	jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTipoNegocios" 
+	    statementType="CALLABLE"
+		parameterMap="obtTpNegPM" 
+		resultMap="obtTpNegRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTipoNegocios(?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneTipoNegocios -->
+	
+<!-- INICIO PKG_DIGITACION.fnc_obtieneSorter -->
+
+	<resultMap id="obtSorterRM" type="cl.bluex.digmodel.to.SorterTO">
+		<result property="codigo" 		column="cdg_sotr" />
+		<result property="descripcion" 	column="nmb_sotr" />
+	</resultMap>
+
+	<parameterMap id="obtSorterPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtSorterRM" />
+		<parameter property="codError" 	jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneSorter" 
+	    statementType="CALLABLE"
+		parameterMap="obtSorterPM" 
+		resultMap="obtSorterRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneSorter(?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneSorter -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneTraduccionEmpresa -->
+
+	<resultMap id="obtTraduccionEmpresaRM" type="cl.bluex.digmodel.to.TraduccionEmpresaTO">
+		<result property="codigo" 			column="nmr_trd" />
+		<result property="descripcion" 		column="rzn_social" />
+		<result property="codigoOriginal" 	column="empr_cdg" />
+	</resultMap>
+
+	<parameterMap id="obtTraduccionEmpresaPM" type="map">
+		<parameter property="resultado"			jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtTraduccionEmpresaRM" />
+		<parameter property="codigo" 			jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoSistema" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoAplicacion" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTraduccionEmpresa" 
+	    statementType="CALLABLE"
+		parameterMap="obtTraduccionEmpresaPM" 
+		resultMap="obtTraduccionEmpresaRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTraduccionEmpresa(?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneTraduccionEmpresa -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneTraduccionEmpresa -->
+
+	<resultMap id="obtProductosServiciosRM" type="cl.bluex.digmodel.to.ProductoServicioTO">
+		<result property="codigo" 			column="prsv_cdg_destino" />
+		<result property="descripcion" 		column="prsv_desc" />
+		<result property="codigoOrigen" 	column="prsv_cdg_origen" />
+		<result property="codigoFamilia" 	column="fmpr_cdg" />
+	</resultMap>
+
+	<parameterMap id="obtProductosServiciosPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtProductosServiciosRM" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoOrigen" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="tipo" 			jdbcType="NUMERIC" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneProductosServicios" 
+	    statementType="CALLABLE"
+		parameterMap="obtProductosServiciosPM" 
+		resultMap="obtProductosServiciosRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneProductosServicios(?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneTraduccionEmpresa -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneTraduccionEmpresa -->
+
+	<resultMap id="obtTradProdRM" type="cl.bluex.digmodel.to.TraduccionProductoTO">
+		<result property="codigoOrigen" 			column="cdex_cdg_origen" />
+		<result property="descripcionOrigen" 		column="cdex_desc_origen" />
+		<result property="codigoTraducido" 			column="cdex_cdg_traducido" />
+		<result property="descripcionTraducido" 	column="cdex_desc_traducido" />
+		<result property="codigoFamilia" 			column="fmpr_cdg" />
+	</resultMap>
+
+	<parameterMap id="obtTradProdPM" type="map">
+		<parameter property="resultado"			jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtTradProdRM" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="tipo" 				jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTraduccionProducto" 
+	    statementType="CALLABLE"
+		parameterMap="obtTradProdPM" 
+		resultMap="obtTradProdRM">
+
+		{ ? = call PCK_LISTAS.fnc_obtieneTradProducto(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneTraduccionEmpresa -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneParametrosGenerales -->
+	<resultMap id="paramGeneralesRM" type="cl.bluex.digmodel.to.ParametroGeneralTO">
+		<result property="idParametro" 			column="cgpg_id" />
+		<result property="nombreCampo" 			column="cgpg_nmbr_campo" />
+		<result property="valorCampo" 			column="cgpg_vlor_campo" />
+	</resultMap>
+	
+	<parameterMap id="paramGeneralesPM" type="map">
+		<parameter property="resultado"			jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="paramGeneralesRM" />
+		<parameter property="idParametro" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="nombreParametro" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneParametrosGenerales" 
+	    statementType="CALLABLE"
+		parameterMap="paramGeneralesPM"
+		resultMap="paramGeneralesRM">
+
+		{? = call PCK_LISTAS.fnc_obtieneParametrosGenerales(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneParametrosGenerales -->
+	
+</mapper>

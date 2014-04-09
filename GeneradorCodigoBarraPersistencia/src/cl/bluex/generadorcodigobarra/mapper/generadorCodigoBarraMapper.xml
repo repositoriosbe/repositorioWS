@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.generadorcodigobarra.mapper.GeneradorCodigoBarraMapper">
+
+<!-- INICIO codigo_barra_l28_pkg.get_codigo_barra_l28 -->
+	<resultMap id="obtCodBarraL28RM" type="cl.bluex.generadorcodigobarramodel.to.CodigoBarraL28TO">
+		<result property="codigoBarraL28" 		column="codigo_barra_l28" />
+		<result property="codigoComunaIne" 		column="cmns_cdg_ine" />
+		<result property="codigoZona" 			column="czsz_cdg_zona" />
+		<result property="codigoSubZona" 		column="czsz_cdg_subzona" />
+		<result property="codigoProducto" 		column="prdt_cdg" />
+		<result property="nombreProducto" 		column="prdt_dsc" />
+		<result property="codigoServicio" 		column="tpsv_cdg" />
+		<result property="nombreServicio" 		column="tpsv_dsc" />
+		<result property="codigoBase" 			column="base_cdg" />
+		<result property="nombreBase" 			column="base_dsc" />
+		<result property="codigoPosta" 			column="psta_cdg" />
+		<result property="nombrePosta" 			column="psta_dsc" />
+		<result property="codigoPieza" 			column="pzas_cdg" />
+		<result property="codigoBarraGuia" 		column="cdg_barra_guia" />
+		<result property="numeroPieza" 			column="pieza_numero" />
+		<result property="totalPieza"	 		column="pieza_total" />
+	</resultMap>
+
+	<parameterMap id="obtCodBarraL28PM" type="map">
+		<parameter property="eevvNmrSerie" 				jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoEmpresa" 			jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="numeroPiezas"	 			jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoProducto" 			jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="tipoServicio" 				jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoCliente" 			jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoSucursalCliente" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoTipoCliente" 		jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 				jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="tipoDocumento" 			jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="tipoNegocio" 				jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoEmpresaDocumento" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="resultado" 				jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtCodBarraL28RM" />
+		<parameter property="codError" 					jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 				jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneCodigoBarraL28" 
+	    	statementType="CALLABLE"
+			parameterMap="obtCodBarraL28PM"
+			resultMap="obtCodBarraL28RM">
+
+		{ call codigo_barra_l28_pkg.get_codigo_barra_l28(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN codigo_barra_l28_pkg.get_codigo_barra_l28 -->
+
+
+
+</mapper>

@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.digfull.mapper.DigitacionFullMapper">
+<!-- INICIO PKG_DIGITACION.prc_validaEspecieValoradaFull -->
+	<parameterMap id="validaEevvFullPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 		javaType="long" mode="IN" />
+		<parameter property="codigoTipoDocumento" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="numeroDocumento" 	jdbcType="NUMERIC" 		javaType="long" mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 		javaType="long" mode="OUT"/>
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 		javaType="long" mode="OUT"/>
+		<parameter property="sucursalCliente" 	jdbcType="NUMERIC" 		javaType="long" mode="OUT"/>
+		<parameter property="codError" 			jdbcType="NUMERIC" 		javaType="int" mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 		javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="validaEspecieValoradaFull" 
+	    statementType="CALLABLE"
+		parameterMap="validaEevvFullPM">
+
+		{ call pck_digitacion.prc_validaEspecieValoradaFull(?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_validaEspecieValoradaFull -->
+
+<!-- INICIO PKG_DIGITACION.fnc_insertaOrdenServicio -->
+	<parameterMap id="insOrdenServicioPM" type="map">
+		<parameter property="eevvNmrId" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoClaseTarifa" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoPago" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoPagoOtros" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoMedida" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idAgente" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvAgente" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="rgnEstadoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirComunaAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirCalleAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirNmrAgente" 			jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="dirBlockAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirDeptoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirPisoAgente" 		jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="direccionAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPostalAgente" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="prfjFonoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="fonoAgente" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="extFonoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="nombreEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirRgnEstadoEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirCalleEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirComunaEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirNmrEmbarque" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="dirBlockEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirPisoEmbarque" 		jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="direccionEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPostalEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="prfjFonoEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="fonoEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="extfonoEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idDestino" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvDestino" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirRgnEstadoDestino" 	jdbcType="VARCHAR"	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirComunaDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirCalleDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirNmrDestino" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="dirBlockDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirDeptoDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirPisoDestino" 		jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="direccionDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="cdgPostalDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="prfjFonoDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="fonoDestino" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="extFonoDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="valorDeclarado" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorSeguro" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorAduana" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorFletepp" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorFletecc" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorValorapp" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorValoracc" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorGastoAgentepp" 	jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorGastoAgentecc" 	jdbcType="DOUBLE" 	javaType="double"			mode="IN" />
+		<parameter property="valorGastoCarrierpp" 	jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorGastoCarriercc" 	jdbcType="DOUBLE" 	javaType="double"			mode="IN" />
+		<parameter property="valorImptopp" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorImptocc" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorVariospp" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorVarioscc" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="cntPiezas" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="pesoFisico" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="pesoVolumen" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="tarifa" 				jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="descripcionProducto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoMoneda" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoEmpresaLaer" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoPostaDestino" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoNegDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoPostaOrigen" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoNegOrigen" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoServicio" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoUsuario" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoFamilia" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoProducto" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="doctEevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tpclCodigoAgente" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoAgente" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalAgente" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tpclCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tpclCodigoDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="nombreDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoOser" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoEstado" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoOficinaDestino" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="observacion" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoLlave" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="llaveTarifa" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoCentroCosto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="flagFactura" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="producto" 				jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="customDuties" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="crrnSeqCodigo" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="fechaCreacion"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaOrdenServicio" 
+	    statementType="CALLABLE"
+		parameterMap="insOrdenServicioPM">
+
+		{ call pck_digitacion.prc_insertaOrdenServicio(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+															?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+															?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+															?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+															?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+															?,?,?)}
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_insertaOrdenServicio -->
+
+<!-- INICIO PKG_DIGITACION.prc_actualizaOrdenServicio -->
+	<parameterMap id="actOrdenServicioPM" type="map">
+		<parameter property="eevvNmrId" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoClaseTarifa" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoPago" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoPagoOtros" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoMedida" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idAgente" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvAgente" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="rgnEstadoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirComunaAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirCalleAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirNmrAgente" 			jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="dirBlockAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirDeptoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirPisoAgente" 		jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="direccionAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPostalAgente" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="prfjFonoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="fonoAgente" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="extFonoAgente" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="nombreEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirRgnEstadoEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirCalleEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirComunaEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirNmrEmbarque" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="dirBlockEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirPisoEmbarque" 		jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="direccionEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPostalEmbarque" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="prfjFonoEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="fonoEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="extfonoEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idDestino" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvDestino" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirRgnEstadoDestino" 	jdbcType="VARCHAR"	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirComunaDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirCalleDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirNmrDestino" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="dirBlockDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirDeptoDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dirPisoDestino" 		jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="direccionDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="cdgPostalDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="prfjFonoDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="fonoDestino" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="extFonoDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="valorDeclarado" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorSeguro" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorAduana" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorFletepp" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorFletecc" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorValorapp" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorValoracc" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorGastoAgentepp" 	jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorGastoAgentecc" 	jdbcType="DOUBLE" 	javaType="double"			mode="IN" />
+		<parameter property="valorGastoCarrierpp" 	jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorGastoCarriercc" 	jdbcType="DOUBLE" 	javaType="double"			mode="IN" />
+		<parameter property="valorImptopp" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorImptocc" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorVariospp" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="valorVarioscc" 		jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="cntPiezas" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="pesoFisico" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="pesoVolumen" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="tarifa" 				jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="descripcionProducto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoMoneda" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoEmpresaLaer" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoPostaDestino" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoNegDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoPostaOrigen" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoNegOrigen" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoServicio" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoUsuario" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoFamilia" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoProducto" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="doctEevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tpclCodigoAgente" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoAgente" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalAgente" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tpclCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tpclCodigoDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalDestino" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="nombreDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoOser" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoEstado" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoOficinaDestino" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="observacion" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoLlave" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="llaveTarifa" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoCentroCosto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="flagFactura" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="producto" 				jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="customDuties" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="crrnSeqCodigo" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="largo" 				jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="ancho" 				jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="alto" 					jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="whrVolumen" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="whrCntPiezas" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="fechaCreacion"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+	
+	<select id="actualizaOrdenServicio" 
+	    statementType="CALLABLE"
+		parameterMap="actOrdenServicioPM">
+
+		{ call pck_digitacion.prc_actualizaOrdenServicio(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+														 ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+														 ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+														 ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+														 ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+														 ?,?,?,?,?,?,?,?)}
+	</select>
+<!-- FIN PKG_DIGITACION.prc_actualizaOrdenServicio -->
+
+<!-- INICIO PKG_DIGITACION.prc_validaIndicadorPtoEntrega -->
+	<parameterMap id="validaIndPtoEntregaPM" type="map">
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="sucursalCliente" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="tipoCliente" 		jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="fechaCreacionOser" jdbcType="DATE" 	javaType="java.util.Date" mode="IN" />
+		<parameter property="resultado" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT"/>
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="validaIndicadorPtoEntrega" 
+	    statementType="CALLABLE"
+		parameterMap="validaIndPtoEntregaPM">
+
+		{ call pck_digitacion.prc_validaIndicadorPtoEntrega(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_validaIndicadorPtoEntrega -->
+
+<!-- INICIO PKG_DIGITACION.prc_validaTipoCliente -->
+	<parameterMap id="validaTipoClientePM" type="map">
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="sucursalCliente" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="tipoCliente" 		jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="descripcion" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="tipoEstado" 		jdbcType="NUMERIC" 	javaType="long" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="validaTipoCliente" 
+	    statementType="CALLABLE"
+		parameterMap="validaTipoClientePM">
+
+		{ call pck_digitacion.prc_validaTipoCliente(?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_validaTipoCliente -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneDatosCliente -->
+	<parameterMap id="obtieneDatosClientePM" type="map">
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="sucursalCliente" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="tipoCliente" 		jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="rut" 				jdbcType="NUMERIC" 	javaType="long" mode="OUT" />
+		<parameter property="digitoVerificador" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="nombre" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoRegion" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="ciudad" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="calle" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoComuna" 		jdbcType="NUMERIC" 	javaType="long" mode="OUT" />
+		<parameter property="comuna" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="numero" 			jdbcType="NUMERIC" 	javaType="long" mode="OUT" />
+		<parameter property="depto" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="block" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="piso" 				jdbcType="NUMERIC" 	javaType="long" mode="OUT" />
+		<parameter property="direccion" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoPostal" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="prefijoFono" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="fono" 				jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="extensionFono" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="swtValorado" 		jdbcType="NUMERIC" 	javaType="long" mode="OUT" />
+		<parameter property="swtCtaGratis" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneDatosCliente" 
+	    statementType="CALLABLE"
+		parameterMap="obtieneDatosClientePM">
+
+		{ call pck_digitacion.prc_obtieneDatosCliente(?,?,?,?,?,?,?,?,?,?,
+													  ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneDatosCliente -->
+
+<!-- INICIO PKG_DIGITACION.prc_insertaReferencia -->
+	<parameterMap id="insertaRefPM" type="map">
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="codigoTipoReferencia" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaReferencia" 
+	    statementType="CALLABLE"
+		parameterMap="insertaRefPM">
+
+		{ call pck_digitacion.prc_insertaReferencia(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_insertaReferencia -->
+
+<!-- INICIO PKG_DIGITACION.prc_insertServComplementario -->
+	<parameterMap id="insertaSCPM" type="map">
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoServicio" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+		<parameter property="numeroReserva" jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="swBasico" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="rendida" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaServicioComplementario" 
+	    statementType="CALLABLE"
+		parameterMap="insertaSCPM">
+
+		{ call pck_digitacion.prc_insertServComplementario(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_insertServComplementario -->
+
+<!-- INICIO PKG_DIGITACION.prc_insertaDetalleSC -->
+	<parameterMap id="detalleSCPM" type="map">
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idDocumento" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoDocumentoServicio" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaDetalleSC" 
+	    statementType="CALLABLE"
+		parameterMap="detalleSCPM">
+
+		{ call pck_digitacion.prc_insertaDetalleSC(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_insertaDetalleSC -->
+
+<!-- INICIO PKG_DIGITACION.prc_actualizaDetalleSC -->
+	<select id="actualizaDetalleSC" 
+	    statementType="CALLABLE"
+		parameterMap="detalleSCPM">
+
+		{ call pck_digitacion.prc_actualizaDetalleSC(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_actualizaDetalleSC -->
+
+<!-- INICIO PKG_DIGITACION.prc_insertaFormaPagoSC -->
+	<parameterMap id="formaPagoSCPM" type="map">
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="numeroLinea" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="idDocumento" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoPago" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoDocumentoServicio" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+		<parameter property="monto" 			jdbcType="NUMERIC" 	javaType="long"				mode="IN" />
+		<parameter property="serieDocumento" 	jdbcType="VARCHAR" 	javaType="java.lang.String"	mode="IN" />
+		<parameter property="banco" 			jdbcType="NUMERIC" 	javaType="long"				mode="IN" />
+		<parameter property="fechaPago" 		jdbcType="DATE" 	javaType="java.util.Date" 	mode="IN" />
+		<parameter property="idDiasPago" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaFormaPagoSC" 
+	    statementType="CALLABLE"
+		parameterMap="formaPagoSCPM">
+
+		{ call pck_digitacion.prc_insertaFormaPagoSC(?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_actualizaFormaPagoSC -->
+
+<!-- INICIO PKG_DIGITACION.prc_insertaFormaPagoSC -->
+	<select id="actualizaFormaPagoSC" 
+	    statementType="CALLABLE"
+		parameterMap="formaPagoSCPM">
+
+		{ call pck_digitacion.prc_actualizaFormaPagoSC(?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_actualizaFormaPagoSC -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneParametroGeneral -->
+	<parameterMap id="paramGeneralPM" type="map">
+		<parameter property="idParametro" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="nombreParametro" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="valor" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneParametroGeneral" 
+	    statementType="CALLABLE"
+		parameterMap="paramGeneralPM">
+
+		{ call pck_digitacion.prc_obtieneParametroGeneral(?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneParametroGeneral -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneTarifa -->
+	<parameterMap id="obtTarifaPM" type="map">
+		<parameter property="codigoEmpresa"         jdbcType="NUMERIC"  javaType="long"             mode="IN" />
+		<parameter property="codigoServicio"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoProducto"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoFamilia"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoCliente"         jdbcType="NUMERIC"  javaType="long"             mode="IN" />
+		<parameter property="codigoSucursalCliente" jdbcType="NUMERIC"  javaType="long"             mode="IN" />
+		<parameter property="codigoTipoCliente"     jdbcType="NUMERIC"  javaType="long"             mode="IN" />
+		<parameter property="codigoPostaOrigen"     jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPostaDestino"    jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoMoneda"          jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN" />
+		<parameter property="pesoVolumen"           jdbcType="DOUBLE"   javaType="double"           mode="IN" />
+		<parameter property="pesoFisico"            jdbcType="DOUBLE"   javaType="double"           mode="IN" />
+		<parameter property="fecha"                 jdbcType="DATE"  	javaType="java.util.Date" 	mode="IN" />
+		<parameter property="cantidadPiezas"        jdbcType="NUMERIC"  javaType="long"   			mode="IN" />
+		<parameter property="valorApendice"        	jdbcType="NUMERIC"  javaType="long"   			mode="IN" />
+		<parameter property="flete"                 jdbcType="DOUBLE"  javaType="double"            mode="OUT" />
+		<parameter property="codigoTipoServicio"    jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoMetodoCalculo"   jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="unidadBase"            jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="indicadorUsaRi"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="indicadorUnidades"     jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="cargoPorcentual"       jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+		<parameter property="cargoFijo"             jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+		<parameter property="numeroAcuerdo"         jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+		<parameter property="usaPuntoEntrega"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="swActivacion"          jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="tarifa"                jdbcType="DOUBLE"  javaType="double"            mode="OUT" />
+		<parameter property="impuesto"        		jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTarifa" 
+	    statementType="CALLABLE"
+		parameterMap="obtTarifaPM">
+
+		{ call pck_digitacion.prc_obtieneTarifa(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneTarifa -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneOrdenServicio -->
+
+	<parameterMap id="obtieneOSPM" type="map">
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoDocumento" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="numeroDocumento" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="eevvNmrId" 			jdbcType="NUMERIC" 	javaType="long" 			mode="OUT" />
+		<parameter property="codigoTipoClaseTarifa" jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="tipoPago"              jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="tipoPagoOtros"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="tipoMedida"            jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="idAgente"              jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dvAgente"              jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="rgnEstadoAgente"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirComunaAgente"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirCalleAgente"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirNmrAgente"          jdbcType="NUMERIC"  javaType="int"              mode="OUT" />
+	    <parameter property="dirBlockAgente"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirDeptoAgente"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirPisoAgente"         jdbcType="NUMERIC"  javaType="int"              mode="OUT" />
+	    <parameter property="direccionAgente"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoPostalAgente"    jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="prfjFonoAgente"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="fonoAgente"            jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="extFonoAgente"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="idEmbarque"            jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dvEmbarque"            jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="nombreEmbarque"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirRgnEstadoEmbarque"  jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirCalleEmbarque"      jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirComunaEmbarque"     jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirNmrEmbarque"        jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="dirBlockEmbarque"      jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirPisoEmbarque"       jdbcType="NUMERIC"  javaType="int"              mode="OUT" />
+	    <parameter property="direccionEmbarque"     jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoPostalEmbarque"  jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="prfjFonoEmbarque"      jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="fonoEmbarque"          jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="extfonoEmbarque"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="idDestino"             jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dvDestino"             jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirRgnEstadoDestino"   jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirComunaDestino"      jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirCalleDestino"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirNmrDestino"         jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="dirBlockDestino"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirDeptoDestino"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="dirPisoDestino"        jdbcType="NUMERIC"  javaType="int"              mode="OUT" />
+	    <parameter property="direccionDestino"      jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="cdgPostalDestino"      jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="prfjFonoDestino"       jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="fonoDestino"           jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="extFonoDestino"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="valorDeclarado"        jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorSeguro"           jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorAduana"           jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorFletepp"          jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorFletecc"          jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorValorapp"         jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorValoracc"         jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorGastoAgentepp"    jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorGastoAgentecc"    jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorGastoCarrierpp"   jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorGastoCarriercc"   jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorImptopp"          jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorImptocc"          jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorVariospp"         jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="valorVarioscc"         jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="cntPiezas"             jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="pesoFisico"            jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="pesoVolumen"           jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="tarifa"                jdbcType="DOUBLE"   javaType="double"           mode="OUT" />
+	    <parameter property="descripcionProducto"   jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoMoneda"          jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoEmpresa"         jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="codigoEmpresaLaer"     jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="codigoPostaDestino"    jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoTipoNegDestino"  jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="codigoPostaOrigen"     jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoTipoNegOrigen"   jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="codigoServicio"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoUsuario"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoFamilia"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoProducto"        jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="doctEevvNmrId"         jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="tpclCodigoAgente"      jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="clhlCodigoAgente"      jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="clhlSucursalAgente"    jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="tpclCodigoEmbarque"    jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="clhlCodigoEmbarque"    jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="clhlSucursalEmbarque"  jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="tpclCodigoDestino"     jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="clhlCodigoDestino"     jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="clhlSucursalDestino"   jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="nombreDestino"         jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoOser"            jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="codigoEstado"          jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoOficinaDestino"  jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="observacion"           jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="tipoLlave"             jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="llaveTarifa"           jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="codigoCentroCosto"     jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="flagFactura"           jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+	    <parameter property="producto"              jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="customDuties"          jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="crrnSeqCodigo"         jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+	    <parameter property="fechaCreacion"         jdbcType="VARCHAR"  javaType="java.lang.String"   mode="OUT" />
+	    <parameter property="numeroWhr"     		jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+		<parameter property="largo"         		jdbcType="DOUBLE"  	javaType="double"           mode="OUT" />
+		<parameter property="ancho"         		jdbcType="DOUBLE"  	javaType="double"           mode="OUT" />
+		<parameter property="alto"         			jdbcType="DOUBLE"  	javaType="double"           mode="OUT" />
+		<parameter property="whrVolumen"   			jdbcType="DOUBLE"  	javaType="double"           mode="OUT" />
+		<parameter property="whrCntPiezas"  		jdbcType="NUMERIC"  javaType="long"             mode="OUT" />
+		<parameter property="codigoRegion"          jdbcType="NUMERIC"  javaType="int"              mode="OUT" />
+		<parameter property="codigoServicioTraducido" jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="unidadValor" 			jdbcType="NUMERIC"  javaType="int" 				mode="OUT" />
+		<parameter property="unidadDescripcion" 	jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT" />
+		<parameter property="cubicado" 				jdbcType="NUMERIC"  javaType="int" 				mode="OUT" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneOrdenServicio" 
+	    statementType="CALLABLE"
+		parameterMap="obtieneOSPM">
+
+		{ call pck_digitacion.prc_obtieneOrdenServicio(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+													   ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+													   ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+													   ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+													   ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+													   ?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneOrdenServicio -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneServComplementarios -->
+
+	<resultMap id="obtServComplRM" type="cl.bluex.digmodel.to.ServicioComplementarioTO">
+		<result property="codigoServicio" 	column="tpsv_cdg" />
+		<result property="swBasico" 		column="csor_swt_basico" />
+		<result property="nroReserva" 		column="rsva_nmr_reserva" />
+		<result property="rendida" 			column="csor_rendida" />
+	</resultMap>
+
+	<parameterMap id="obtServComplPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtServComplRM" />
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneServiciosComplementarios" 
+	    statementType="CALLABLE"
+		parameterMap="obtServComplPM" 
+		resultMap="obtServComplRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneServComplementarios(?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneServComplementarios -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneDetalleSC -->
+
+	<resultMap id="obtDetalleSCRM" type="cl.bluex.digmodel.to.ServicioComplementarioDetalleTO">
+		<result property="codigoServicio" 			column="tpsv_cdg" />
+		<result property="idDocumento" 				column="dscp_id_docto" />
+		<result property="tipoDocumentoServicio" 	column="tdsc_cdg" />
+		<result property="descripcionTipoDocumento" column="tdsc_dsc" />
+		<result property="codigoEmpresa" 			column="empr_cdg" />
+	</resultMap>
+
+	<parameterMap id="obtDetalleSCPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtDetalleSCRM" />
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoServicio" jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneDetalleSC" 
+	    statementType="CALLABLE"
+		parameterMap="obtDetalleSCPM" 
+		resultMap="obtDetalleSCRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneDetalleSC(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneDetalleSC -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneFormaPagoSC -->
+	<resultMap id="obtPagoSCRM" type="cl.bluex.digmodel.to.ServicioComplementarioPagoTO">
+		<result property="codigoServicio" 			column="tpsv_cdg" />
+		<result property="numeroLinea" 				column="ddsc_nmr_linea" />
+		<result property="idDocumento" 				column="dscp_id_docto" />
+		<result property="tipoPago" 				column="ddsc_tipo_pago" />
+		<result property="descripcionTipoPago" 		column="tpfp_dsc" />
+		<result property="tipoDocumentoServicio" 	column="tdsc_cdg" />
+		<result property="monto" 					column="ddsc_monto" />
+		<result property="serieDocumento" 			column="ddsc_serie_docto" />
+		<result property="banco" 					column="ddsc_banco" />
+		<result property="descripcionBanco" 		column="bnco_nmb" />
+		<result property="fechaPago" 				column="ddsc_fch_pago" />
+		<result property="idDiasPago" 				column="ddpg_id_dias_pago" />
+		<result property="descripcionDiasPago" 		column="ddpg_desc_dias_pago" />
+	</resultMap>
+
+	<parameterMap id="obtPagoSCPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtPagoSCRM" />
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoServicio" jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneFormaPagoSC" 
+	    statementType="CALLABLE"
+		parameterMap="obtPagoSCPM" 
+		resultMap="obtPagoSCRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneFormaPagoSC(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneFormaPagoSC -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneReferencias -->
+	<resultMap id="obtReferenciaRM" type="cl.bluex.digmodel.to.ReferenciaTO">
+		<result property="codigoTipoReferencia" column="rfrc_cdg" />
+	</resultMap>
+
+	<parameterMap id="obtReferenciaPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtReferenciaRM" />
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneReferencias" 
+	    statementType="CALLABLE"
+		parameterMap="obtReferenciaPM" 
+		resultMap="obtReferenciaRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneReferencias(?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneReferencias -->
+
+<!-- INICIO PKG_DIGITACION.prc_eliminaServicioComplementario -->
+	<parameterMap id="eliminaSCPM" type="map">
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoServicio" jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminaServicioComplementario" 
+	    statementType="CALLABLE"
+		parameterMap="eliminaSCPM">
+
+		{ call pck_digitacion.prc_eliminaServComplementario(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_eliminaServicioComplementario -->
+
+<!-- INICIO PKG_DIGITACION.prc_eliminaReferencia -->
+	<parameterMap id="eliminaRefPM" type="map">
+		<parameter property="eevvNmrId" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoTipoReferencia" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminaReferencia" 
+	    statementType="CALLABLE"
+		parameterMap="eliminaRefPM">
+
+		{ call pck_digitacion.prc_eliminaReferencia(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_eliminaReferencia -->
+
+<!-- INICIO PKG_DIGITACION.prc_eliminaDetalleSC -->
+	<parameterMap id="eliminaDetalleSCPM" type="map">
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminaDetalleSC" 
+	    statementType="CALLABLE"
+		parameterMap="eliminaDetalleSCPM">
+
+		{ call pck_digitacion.prc_eliminaDetalleSC(?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_eliminaDetalleSC -->
+
+<!-- INICIO PKG_DIGITACION.prc_eliminaFormaPagoSC -->
+	<parameterMap id="eliminaFPagoSCPM" type="map">
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminaFormaPagoSC" 
+	    statementType="CALLABLE"
+		parameterMap="eliminaFPagoSCPM">
+
+		{ call pck_digitacion.prc_eliminaFormaPagoSC(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_eliminaFormaPagoSC -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneTraduccionServicioReal -->
+	<parameterMap id="obtTradServPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" mode="IN" />
+		<parameter property="codigoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoProducto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoRegion" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="resultado" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTraduccionServicioReal" 
+	    statementType="CALLABLE"
+		parameterMap="obtTradServPM">
+
+		{ call pck_digitacion.prc_obtieneTraduccionServReal(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneTraduccionServicioReal -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneTraduccionServicio -->
+	<parameterMap id="obtTradServicioPM" type="map">
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoServicioReal" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoRegion" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="resultado" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneTraduccionServicio" 
+	    statementType="CALLABLE"
+		parameterMap="obtTradServicioPM">
+
+		{ call pck_digitacion.prc_obtieneTraduccionServicio(?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneTraduccionServicio -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneTraduccionServicio -->
+	<parameterMap id="insertApendicePM" type="map">
+		<parameter property="eevvNmrId" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoApendice" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="valor" 				jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="descripcion" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaApendices" 
+	    statementType="CALLABLE"
+		parameterMap="insertApendicePM">
+
+		{ call pck_digitacion.prc_insertaApendices(?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneTraduccionServicio -->
+
+<!-- INICIO PKG_DIGITACION.prc_validaIndicadorUnidades -->
+	<parameterMap id="valIndUnidadesPM" type="map">
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="sucursalCliente" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="tipoCliente" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="fechaCreacionOser" jdbcType="DATE" 	javaType="java.util.Date" 	mode="IN" />
+		<parameter property="resultado" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="validaIndicadorUnidades" 
+	    statementType="CALLABLE"
+		parameterMap="valIndUnidadesPM">
+
+		{ call pck_digitacion.prc_validaIndicadorUnidades(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_validaIndicadorUnidades -->
+
+<!-- INICIO PKG_DIGITACION.prc_insertaWarehouse -->
+	<parameterMap id="insertaWrhPM" type="map">
+		<parameter property="codigoTipoWarehouse" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="eevvNmrId" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="nombreEmbarque" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="nombreDestino" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tipoMedida" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="cntPiezas" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="pesoFisico" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="pesoVolumen" 			jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="codigoUsuario" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="tpclCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoEmpresaLaer" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoFamilia" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoProducto" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoServicio" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="dvEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="idEmbarque" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="observaciones" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="largo" 				jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="ancho" 				jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="alto" 					jdbcType="DOUBLE" 	javaType="double" 			mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaWarehouse" 
+	    statementType="CALLABLE"
+		parameterMap="insertaWrhPM">
+
+		{ call pck_digitacion.prc_insertaWarehouse(?,?,?,?,?,?,?,?,?,?,
+												   ?,?,?,?,?,?,?,?,?,?,
+												   ?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_prc_insertaWarehouse -->
+</mapper>

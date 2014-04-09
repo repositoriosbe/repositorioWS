@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="test">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="lib_comunes/commons-codec-1.5.jar"/>
+	<classpathentry kind="var" path="lib_comunes/jboss-interceptors-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="var" path="lib_comunes/jboss-jsf-api_2.1_spec-2.1.19.Final.jar"/>
+	<classpathentry kind="var" path="lib_comunes/junit-4.11.jar"/>
+	<classpathentry kind="var" path="lib_comunes/log4j-1.2.16.jar"/>
+	<classpathentry kind="var" path="lib_comunes/mybatis-3.0.6.jar"/>
+	<classpathentry kind="var" path="lib_comunes/spring-beans-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="lib_comunes/spring-context-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="var" path="lib_comunes/spring-core-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

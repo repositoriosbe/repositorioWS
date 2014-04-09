@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.digexpress.mapper.DigitacionExpressMapper">
+
+	<!-- INICIO PKG_DIGITACION.fnc_actualizacabagrup -->
+	<resultMap id="cabeceraAgrupacionRM" type="cl.bluex.digmodel.to.CabeceraAgrupacionTO">
+		<result property="codigoAgrupacion" column="edex_agrp_cdg" />
+	</resultMap>
+
+	<parameterMap id="cabeceraAgrupacionPM" type="map">
+		<parameter property="resultado" 	jdbcType="CURSOR"	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="cabeceraAgrupacionRM" />
+		<parameter property="id" 			jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoRuta" 	jdbcType="INTEGER"	javaType="java.lang.Integer" 	mode="IN" />
+		<parameter property="courier" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC"	javaType="long" 				mode="IN" />
+		<parameter property="descripcion" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="cantidadDctosEstimados" jdbcType="NUMERIC" javaType="long" 		mode="IN" />
+		<parameter property="tipoBulto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="folioHojaRuta" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoUsuario" jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoPosta" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="mostrarMonitor" jdbcType="INTEGER" javaType="java.lang.Integer" 	mode="IN" />
+		<parameter property="codigoSorter" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="digitacionOrigen" jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 		jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="actualizaCabeceraAgrupacion" 
+	    statementType="CALLABLE"
+		parameterMap="cabeceraAgrupacionPM" 
+		resultMap="cabeceraAgrupacionRM">
+
+		{ ? = call pck_digitacion.fnc_actualizacabagrup(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_actualizacabagrup -->
+
+<!-- INICIO PKG_DIGITACION.fnc_insertaDigitExpress -->
+
+	<parameterMap id="detalleDigitacionPM" type="map">
+		<parameter property="resultado" 			jdbcType="NUMERIC" 	javaType="long" 			mode="OUT" />
+		<parameter property="id" 					jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="eevvNmrId" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="CantidadPiezas" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoProducto" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoMnpl" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoTipoDocumento" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPais" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoPsta" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoComuna" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoFamiliaProducto" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoCliente" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoSucursalCliente" jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoTipoCliente" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoUsuario" 		jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertaDigitExpress" 
+		statementType="CALLABLE"
+		parameterMap="detalleDigitacionPM">
+
+		{ ? = call
+		pck_digitacion.fnc_insertaDigitExpress(?,?,?,?,?,
+											   ?,?,?,?,?,
+											   ?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_insertaDigitExpress -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneDigitExpress -->
+
+	<resultMap id="obtDigExpRM"
+		type="cl.bluex.digmodel.to.DetalleDigitacionExpressTO">
+		<result property="id" 					column="edex_seq_cdg"/>
+		<result property="eevvNmrId" 			column="eevv_nmr_id"/>
+		<result property="fechaDigitacion" 		column="ddex_fch_digitacion"/>
+		<result property="cantidadPiezas" 		column="ddex_cnt_piezas"/>
+		<result property="codigoFamilia" 		column="fmpr_cdg"/>
+		<result property="codigoProducto" 		column="prdt_cdg"/>
+		<result property="producto" 			column="desc_producto"/>
+		<result property="codigoMnpl" 			column="mnpl_cdg"/>
+		<result property="mnpl" 				column="desc_manipulacion"/>
+		<result property="codigoTipoServicio" 	column="tpsv_cdg"/>
+		<result property="tipoServicio" 		column="desc_tiposervicio"/>
+		<result property="codigoTipoDocumento" 	column="tpdc_cdg"/>
+		<result property="tipoDocumento" 		column="tpdc_dsc"/>
+		<result property="codigoPais" 			column="pses_cdg_iso"/>
+		<result property="pais" 				column="pses_nmbr"/>
+		<result property="codigoPsta" 			column="psta_cdg"/>
+		<result property="posta" 				column="psta_dsc"/>
+		<result property="codigoComuna" 		column="cmns_cdg_ine"/>
+		<result property="comuna" 				column="cmns_nmb"/>
+		<result property="observacion" 			column="ddex_obs"/>
+		<result property="eevvNroSerie" 		column="eevv_nmr_serie"/>
+		<result property="codigoCliente" 		column="clhl_cdg"/>
+		<result property="codigoSucursalCliente" column="clhl_scrs"/>
+		<result property="codigoTipoCliente" 	column="tpcl_cdg"/>
+	</resultMap>
+
+	<parameterMap id="obtDigExpPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="obtDigExpRM" />
+		<parameter property="id" jdbcType="NUMERIC" javaType="long" mode="IN" />
+		<parameter property="eevvNmrId" jdbcType="NUMERIC" javaType="long" mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneDigitExpress" statementType="CALLABLE"
+		parameterMap="obtDigExpPM" resultMap="obtDigExpRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneDigitExpress(?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneDigitExpress -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_eliminaDigitExpress -->
+	<parameterMap id="elimDigExpPM" type="map">
+		<parameter property="resultado" jdbcType="NUMERIC" javaType="long"
+			mode="OUT" />
+		<parameter property="id" jdbcType="NUMERIC" javaType="long"
+			mode="IN" />
+		<parameter property="eevvNmrId" jdbcType="NUMERIC" javaType="long"
+			mode="IN" />
+		<parameter property="codError" jdbcType="VARCHAR" javaType="java.lang.String"
+			mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" javaType="java.lang.String"
+			mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminaDigitExpress" statementType="CALLABLE"
+		parameterMap="elimDigExpPM">
+
+		{ ? = call pck_digitacion.fnc_eliminaDigitExpress(?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_eliminaDigitExpress -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_eliminarAgrupacion -->
+	<parameterMap id="agrupacionPM" type="map">
+		<parameter property="resultado" jdbcType="NUMERIC" javaType="long" mode="OUT" />
+		<parameter property="codigo" jdbcType="NUMERIC" javaType="long" mode="IN" />
+		<parameter property="codError" jdbcType="VARCHAR" javaType="java.lang.String" mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminarAgrupacion" statementType="CALLABLE"
+		parameterMap="agrupacionPM">
+
+		{ ? = call pck_digitacion.fnc_eliminarAgrupacion(?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_eliminarAgrupacion -->
+
+<!-- INICIO PKG_DIGITACION.prc_cerrarAgrupacion -->
+	<parameterMap id="cerrarAgrupacionPM" type="map">
+		<parameter property="codigo" 		jdbcType="NUMERIC" javaType="long" mode="IN" />
+		<parameter property="codigoEstado" 	jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 		jdbcType="VARCHAR" javaType="java.lang.String" mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+	
+	<select id="cerrarAgrupacion" 
+	    statementType="CALLABLE"
+		parameterMap="cerrarAgrupacionPM">
+
+		{ call pck_digitacion.prc_cerrarAgrupacion(?,?,?,?)}
+	</select>
+<!-- FIN PKG_DIGITACION.prc_cerrarAgrupacion -->
+
+<!-- INICIO PKG_DIGITACION.prc_modifestadoagrup -->
+	<parameterMap id="modEstAgrupacionPM" type="map">
+		<parameter property="idCabeceraAgrupacion" 	jdbcType="NUMERIC" javaType="long" mode="IN" />
+		<parameter property="codigoEstado" 		jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+		<parameter property="codigoAgrupacion" 	jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" javaType="int" mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+	
+	<select id="modificarEstadoAgrupacion" 
+	    statementType="CALLABLE"
+		parameterMap="modEstAgrupacionPM">
+
+		{ call pck_digitacion.prc_modifestadoagrup(?,?,?,?,?)}
+	</select>
+<!-- FIN PKG_DIGITACION.prc_modifestadoagrup -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneAgrupacion -->
+	<parameterMap id="optAgrupacionPM" type="map">
+		<parameter property="codigoRuta" 		jdbcType="INTEGER" javaType="java.lang.Integer" mode="IN" />
+		<parameter property="courier" 			jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" javaType="long" 				mode="IN" />
+		<parameter property="descripcion" 		jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="cantidadDctosEstimados" jdbcType="NUMERIC" javaType="long" 		mode="IN" />
+		<parameter property="tipoBulto" 		jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="folioHojaRuta" 	jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="NUMERIC" javaType="long" 				mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="mostrarMonitor" 	jdbcType="INTEGER" javaType="java.lang.Integer"	mode="IN" />
+		<parameter property="codigoSorter" 		jdbcType="NUMERIC" javaType="long" 	mode="IN" />
+		<parameter property="digitacionOrigen" 	jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="idCabeceraAgrupacion" jdbcType="NUMERIC" javaType="long" 			mode="OUT" />
+		<parameter property="codigoAgrupacion" 	jdbcType="VARCHAR" javaType="java.lang.String" 	mode="OUT" />
+		<parameter property="codigoEstado" 		jdbcType="VARCHAR" javaType="java.lang.String" 	mode="OUT" />
+		<parameter property="voucher" 			jdbcType="NUMERIC" javaType="long" 				mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneAgrupacion" 
+	    statementType="CALLABLE"
+		parameterMap="optAgrupacionPM">
+
+		{ call pck_digitacion.prc_obtieneagrupacion(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneAgrupacion -->
+
+<!-- INICIO PKG_DIGITACION.prc_obtieneCabeceraAgrupacion -->
+
+	<parameterMap id="obtCabAgrupacionPM" type="map">
+		<parameter property="codigo" 			jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="codigoAgrupacion" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="long" 			mode="OUT" />
+		<parameter property="cantidadDctosEstimados" jdbcType="NUMERIC" javaType="long" 		mode="OUT" />
+		<parameter property="cantidadDoctosDigitados" jdbcType="NUMERIC" javaType="long" 		mode="OUT" />
+		<parameter property="codigoUsuario" 	jdbcType="NUMERIC" 	javaType="long" 			mode="OUT" />
+		<parameter property="fechaCreacion" 	jdbcType="DATE" 	javaType="java.util.Date" 	mode="OUT" />
+		<parameter property="fechaCierre" 		jdbcType="DATE" 	javaType="java.util.Date" 	mode="OUT" />
+		<parameter property="codigoEstado" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="descripcionEstado" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="tipoBulto" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoRuta" 		jdbcType="INTEGER" 	javaType="java.lang.Integer" mode="OUT" />
+		<parameter property="folioHojaRuta" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="courier" 			jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoSorter" 		jdbcType="NUMERIC" 	javaType="long" 			mode="OUT" />
+		<parameter property="descripcionSorter" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="descripcion" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="digitacionOrigen" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 				mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneCabeceraAgrupacion" 
+	    statementType="CALLABLE"
+		parameterMap="obtCabAgrupacionPM">
+
+		{ call pck_digitacion.prc_obtieneCabeceraAgrupacion(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.prc_obtieneCabeceraAgrupacion -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneDatosHojaRuta -->
+	<parameterMap id="hojaRutaPM" type="map">
+		<parameter property="folio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 		mode="IN" />
+		<parameter property="courier" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 		mode="OUT" />
+		<parameter property="codigoRuta" jdbcType="NUMERIC" javaType="long" 					mode="OUT" />
+		<parameter property="codigoPosta"	jdbcType="VARCHAR"	javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoBodega" jdbcType="VARCHAR"
+			javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoOficina" jdbcType="VARCHAR"
+			javaType="java.lang.String" mode="OUT" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC"
+			javaType="long" mode="OUT" />
+		<parameter property="tipoNegocio" jdbcType="NUMERIC"
+			javaType="long" mode="OUT" />
+		<parameter property="tipoHojaRuta" jdbcType="VARCHAR"
+			javaType="java.lang.String" mode="OUT" />
+		<parameter property="codError" jdbcType="NUMERIC" javaType="int" mode="INOUT" />
+		<parameter property="descError" jdbcType="VARCHAR" javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneDatosHojaRuta" statementType="CALLABLE"
+		parameterMap="hojaRutaPM">
+
+		{ call pck_digitacion.prc_obtieneDatosHojaRuta(?,?,?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneDatosHojaRuta -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_validaEspecieValorada -->
+
+	<parameterMap id="validaEevvPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 		javaType="long" mode="IN" />
+		<parameter property="codigoTipoDocumento" jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="numeroDocumento" 	jdbcType="NUMERIC" 		javaType="long" mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 		javaType="long" mode="OUT"/>
+		<parameter property="codigoCliente" 	jdbcType="NUMERIC" 		javaType="long" mode="OUT"/>
+		<parameter property="sucursalCliente" 	jdbcType="NUMERIC" 		javaType="long" mode="OUT"/>
+		<parameter property="codError" 			jdbcType="NUMERIC" 		javaType="int" mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 		javaType="java.lang.String" mode="INOUT" />
+	</parameterMap>
+
+	<select id="validaEspecieValorada" 
+	    statementType="CALLABLE"
+		parameterMap="validaEevvPM">
+
+		{ call pck_digitacion.prc_validaEspecieValorada(?,?,?,?,?,?,?,?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_validaEspecieValorada -->
+
+	<!-- INICIO PKG_DIGITACION.fnc_obtieneClientesValorados -->
+
+	<resultMap id="clienteRM" type="cl.bluex.digmodel.to.ClienteTO">
+		<result property="codigoCliente" column="clhl_cdg" />
+		<result property="sucursalCliente" column="clhl_scrs" />
+		<result property="tipoCliente" column="tpcl_cdg" />
+	</resultMap>
+
+	<parameterMap id="clientePM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="clienteRM" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneClientesValorados" 
+		statementType="CALLABLE"
+		parameterMap="clientePM" 
+		resultMap="clienteRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneClientesValorados(?)}
+	    
+	</select>
+	<!-- FIN PKG_DIGITACION.fnc_obtieneClientesValorados -->
+
+<!-- INICIO PKG_DIGITACION.fnc_obtieneValorados -->
+
+	<resultMap id="obtieneValoradosRM" type="cl.bluex.digmodel.to.ValoradoTO">
+		<result property="tipoEstado" column="clcg_tpo_estado" />
+		<result property="swtValorado" column="clcg_swt_valorado" />
+	</resultMap>
+
+	<parameterMap id="obtieneValoradosPM" type="map">
+		<parameter property="resultado" jdbcType="CURSOR"
+			javaType="java.sql.ResultSet" mode="OUT" resultMap="obtieneValoradosRM" />
+		<parameter property="codigoCliente" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+		<parameter property="codigoTipoCliente" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+		<parameter property="codigoEmpresa" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+		<parameter property="codigoSucursalCliente" jdbcType="NUMERIC"
+			javaType="long" mode="IN" />
+	</parameterMap>
+
+	<select id="obtieneValorados" statementType="CALLABLE"
+		parameterMap="obtieneValoradosPM" resultMap="obtieneValoradosRM">
+
+		{ ? = call pck_digitacion.fnc_obtieneValorados(?,?,?,?)}
+	    
+	</select>
+<!-- FIN PKG_DIGITACION.fnc_obtieneValorados -->
+
+</mapper>

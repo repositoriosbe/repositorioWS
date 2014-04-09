@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.seguridad.mapper.SeguridadMapper"> 
+    
+<!-- INICIO PRC_AUTENTICACION: Comprueba si el usuario existe en la base de datos -->
+    <parameterMap id="autenticaUsuarioPM" type="map">
+        <parameter property="username"  javaType="java.lang.String" jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="password"  javaType="java.lang.String" jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="codError"  javaType="int" 				jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError" javaType="java.lang.String" jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="autenticacion"
+        parameterMap="autenticaUsuarioPM"
+        statementType="CALLABLE">
+        
+        { call PCK_SEGURIDAD.prc_Autentificacion(?,?,?,?)}
+    </select>
+<!-- FIN -->
+    
+<!-- INICIO FNC_DATOSVALIDAUSUARIO: Obtiene informacion para validar regla de negocios -->
+    <resultMap id="usuarioValidoOUT" type="cl.bluex.seguridad.to.UsuarioValido" >
+        <result property="codigoUsuario"        column="USUA_CDG" />
+        <result property="nombreUsuario"        column="USUA_NMB"/>   
+        <result property="fechaInicioVigente"   column="VDUS_FCH_INI_VIG"/>   
+        <result property="fechaFinVigente"      column="VDUS_FCH_FIN_VIG"/>   
+        <result property="codTipoUsuario"       column="TPEU_CDG"/>   
+        <result property="numIntentosFallidosIngreso" column="VDUS_INT_FALLIDOS"/>
+        <result property="totalIntentosFallidos" column="TOT_INT_FALLIDOS"/>
+        <result property="cantidadSesiones"     column="USUA_CNT_SESIONES"/>
+        <result property="urlFoto"              column="USUA_URL_FOTO"/>
+        <result property="roles"                column="USUA_ROLES"/>
+    </resultMap>
+    
+    <parameterMap id="usuarioValidoPM" type="map">
+        <parameter property="resultado" javaType="java.sql.ResultSet" jdbcType="CURSOR"  mode="OUT" resultMap="usuarioValidoOUT"/>
+        <parameter property="username"  javaType="java.lang.String" jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="password"  javaType="java.lang.String" jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="codError"  javaType="int" 				jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError" javaType="java.lang.String" jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="validarUsuario"
+    	parameterMap="usuarioValidoPM"
+        statementType="CALLABLE"
+        resultMap="usuarioValidoOUT">
+        
+        { ? = call PCK_SEGURIDAD.fnc_DatosValidaUsuario(?,?,?,?)}
+    </select>
+<!-- FIN -->
+    
+<!-- INICIO FNC_ACTUALIZANUMEROINTENTOS: Actualizar Numero de intentos -->
+    <parameterMap id="actualizarNroIntentosIN" type="map">
+        <parameter property="nroIntentos"   javaType="java.lang.Integer"    jdbcType="NUMERIC"  mode="OUT"/>
+        <parameter property="username"      javaType="java.lang.String"     jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="codError"  	javaType="int" 					jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError" 	javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+
+    <update id="actualizarNroIntentos"
+        statementType="CALLABLE"
+        parameterMap="actualizarNroIntentosIN">
+        
+        { ? = call PCK_SEGURIDAD.fnc_ActualizaNumeroIntentos(?,?,?)}
+    </update>
+<!--     FIN -->
+    
+<!--     INICIO FNC_INSERTATOKENUSUARIO: Insertar Token Usuario -->
+    <parameterMap id="insertaTokenIN" type="map">
+        <parameter property="resultado"     javaType="java.lang.Integer"    jdbcType="NUMERIC" mode="OUT"/>
+        <parameter property="token"         javaType="java.lang.String"     jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codUsuario"    javaType="java.lang.Long"       jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="fechaInicio"   javaType="java.lang.String"     jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="direccionIP"   javaType="java.lang.String"     jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="fechaTermino"  javaType="java.lang.String"     jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codOpcionInsertToken" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codError"  	javaType="int" 					jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError" 	javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="insertaTokenUsuario" 
+        parameterMap="insertaTokenIN"
+        statementType="CALLABLE">
+        
+        {? = call PCK_SEGURIDAD.fnc_InsertaTokenUsuario(?,?,?,?,?,?,?,?)}
+    </select>
+<!--     FIN -->
+
+<!-- INICIO fnc_TraeTokenUsuario: Obtiene los token -->
+    <resultMap id="tokenUsuarioOUT" type="cl.bluex.seguridad.to.TokenUsuarioTo" >
+        <result property="token"                column="TKUS_CDG" />
+        <result property="fechaIngresoSession"  column="TKUS_FCH_INICIO"/>   
+        <result property="fechaTerminoSession"  column="TKUS_FCH_TERMINO"/>
+    </resultMap>
+    
+    <parameterMap id="tokenUsuarioINALFA" type="map">
+        <parameter property="resultado"     javaType="java.sql.ResultSet"   jdbcType="CURSOR"  mode="OUT" resultMap="tokenUsuarioOUT"/>
+        <parameter property="username"      javaType="java.lang.String"     jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="codError"  	javaType="int" 					jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError" 	javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="traeTokenUsuario"
+        statementType="CALLABLE"
+        parameterMap="tokenUsuarioINALFA"
+        resultMap="tokenUsuarioOUT">
+        
+        { ? = call PCK_SEGURIDAD.fnc_TraeTokenUsuario(?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO fnc_TraeTokenUsuario: Obtiene los token -->
+	<parameterMap id="eliminarTokenIN" type="map">
+        <parameter property="token"      javaType="java.lang.String"     jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="codError"  javaType="int" 					jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError" 	javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="eliminarToken"
+        statementType="CALLABLE"
+        parameterMap="eliminarTokenIN">
+        
+        {call PCK_SEGURIDAD.prc_EliminarToken(?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO prc_TraeMenuOpciones -->
+    
+    <resultMap id="menuOpcionesOUT" type="cl.bluex.seguridad.to.OpcionesMenuTo" >
+        <result property="appsCodigo" column="apps_cdg" />
+		<result property="app"        column="apps_dsc" />
+		<result property="appsIcono"  column="apps_icono" />
+		<result property="modlCodigo" column="modl_cdg" />
+		<result property="modulo"     column="modl_dsc" />
+		<result property="modlIcono"  column="modl_icono" />
+		<result property="opcnCodigo" column="opcn_cdg" />               
+		<result property="opcion"     column="opcion" />
+		<result property="opcnTipo"   column="opcn_tipo" />
+		<result property="opcnTipoEjecucion" column="opcn_exec" />
+		<result property="opcnUrl"    column="opcn_url" />
+		<result property="opcnIcono"  column="opcn_icono" />
+		<result property="mOrden"     column="modl_order" />
+		<result property="oOrden"     column="opcn_order" />
+        <result property="sisCodigo"  column="sist_cdg" />
+        <result property="sistema"    column="sist_dsc" />		
+    </resultMap>
+    
+    <parameterMap id="menuOpcionesIN" type="map" >
+        <parameter property="tokenUsuario"  javaType="java.lang.String"     jdbcType="VARCHAR"  			mode="IN"/>
+        <parameter property="codigoSistema" javaType="long"     			jdbcType="NUMERIC"  			mode="IN"/>
+        <parameter property="resultado"     javaType="java.sql.ResultSet"   jdbcType="CURSOR"   			mode="OUT" resultMap="menuOpcionesOUT"/>
+    	<parameter property="codError" 		jdbcType="NUMERIC" 				javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="obtieneOpcionesMenu"
+        statementType="CALLABLE"
+        parameterMap="menuOpcionesIN">
+        
+        {call PCK_SEGURIDAD.prc_TraeMenuOpciones(?,?,?,?,?)}
+    </select>
+    <!-- FIN -->
+    
+<!-- INICIO prc_traemenuopcionesfrecuentes -->
+    
+    <resultMap id="menuOpcionesFrecuentesOUT" type="cl.bluex.seguridad.to.OpcionesMenuTo" >
+        <result property="appsCodigo" column="appscodigo" />
+		<result property="app"        column="app" />
+		<result property="appsIcono"  column="appsIcono" />
+		<result property="modlCodigo" column="modlCodigo" />
+		<result property="modulo"     column="modulo" />
+		<result property="modlIcono"  column="modlIcono" />
+		<result property="opcnCodigo" column="opcnCodigo" />               
+		<result property="opcion"     column="opcion" />
+		<result property="opcnTipo"   column="opcnTipo" />
+		<result property="opcnTipoEjecucion" column="opcntipoejecucion" />
+		<result property="opcnUrl"    column="opcnurl" />
+		<result property="opcnIcono"  column="opcnicono" />
+		<result property="mOrden"     column="morden" />
+		<result property="oOrden"     column="oorden" />
+		<result property="opcFrec"    column="opcfrec" />
+		<result property="opcSwtFav"  column="opcswtfav" />
+    </resultMap>
+    
+    <parameterMap id="menuOpcionesFrecuentesIN" type="map" >
+        <parameter property="tokenUsuario"  javaType="java.lang.String"     jdbcType="VARCHAR"  			mode="IN"/>
+        <parameter property="codigoSistema" javaType="long"     			jdbcType="NUMERIC"  			mode="IN"/>
+        <parameter property="resultado"     javaType="java.sql.ResultSet"   jdbcType="CURSOR"   			mode="OUT" resultMap="menuOpcionesFrecuentesOUT"/>
+        <parameter property="codError" 		jdbcType="NUMERIC" 				javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="obtieneOpcionesFrecuentes"
+        statementType="CALLABLE"
+        parameterMap="menuOpcionesFrecuentesIN">
+        
+        {call PCK_SEGURIDAD.prc_traemenuopcionesfrecuentes(?,?,?,?,?)}
+    </select>
+    <!-- FIN -->
+    
+<!-- INICIO prc_obtieneusuariopassword: Obtiene un Usuario -->
+	<parameterMap id="obtieneUsuarioPassIN" type="map">
+    	<parameter property="codigoToken"   javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codigoUsuario" javaType="java.lang.Long"   jdbcType="NUMERIC" mode="OUT"/>
+        <parameter property="password"      javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT"/>
+        <parameter property="codError" 		javaType="int"    			jdbcType="NUMERIC" mode="INOUT" />
+		<parameter property="descError" 	javaType="java.lang.String" jdbcType="VARCHAR" mode="INOUT" />
+    </parameterMap>
+    
+    <select id="obtenerUsuarioPassword"
+        parameterMap="obtieneUsuarioPassIN"
+        statementType="CALLABLE">
+        
+        { call PCK_SEGURIDAD.prc_obtieneusuariopassword(?,?,?,?,?)}
+    </select>	
+<!-- FIN -->
+
+<!-- INICIO fnc_actualizarPassword: Actualiza password del usuario -->
+	<parameterMap id="actualizarPassIN" type="map">
+        <parameter property="resultado"     javaType="java.lang.Integer" jdbcType="NUMERIC" mode="OUT"/>
+        <parameter property="codigoUsuario" javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="passNuevo"     javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codError" 		jdbcType="NUMERIC" 				javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="actualizarPassword" 
+        parameterMap="actualizarPassIN"
+        statementType="CALLABLE">
+        
+        {? = call PCK_SEGURIDAD.fnc_actualizarPassword(?,?,?,?)}
+    </select>
+<!-- FIN -->
+		
+<!-- INICIO prc_insertaFavorito: Inserta Favorito en la base de datos -->
+    <parameterMap id="favoritoIN" type="map">
+        <parameter property="token"         javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codSist"    javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codApp"        javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codModulo"     javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codOpcion"     javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codError" 		jdbcType="NUMERIC" 			javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 			javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="insertaFavorito"
+        parameterMap="favoritoIN"
+        statementType="CALLABLE">
+        
+        { call PCK_SEGURIDAD.prc_insertaFavorito(?,?,?,?,?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO prc_aumentaFrecuenciaOpc: aumenta frecuencia favorito -->
+    <parameterMap id="aumentaFrecuenciaOpcIN" type="cl.bluex.seguridad.to.FavoritoTo">
+        <parameter property="token"         javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codSistema"    javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codApp"        javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codModulo"     javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codOpcion"     javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codError" 		jdbcType="NUMERIC" 			javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 			javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="aumentaFrecuenciaOpc"
+        parameterMap="aumentaFrecuenciaOpcIN"
+        statementType="CALLABLE">
+        
+        { call PCK_SEGURIDAD.prc_aumentaFrecuenciaOpc(?,?,?,?,?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO prc_aumentaFrecuenciaOpc: aumenta frecuencia favorito -->
+    <parameterMap id="eliminaFavoritoIN" type="cl.bluex.seguridad.to.FavoritoTo">
+        <parameter property="token"         javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codSistema"    javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codApp"        javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codModulo"     javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codOpcion"     javaType="java.lang.Long"   jdbcType="NUMERIC" mode="IN"/>
+        <parameter property="codError" 		jdbcType="NUMERIC" 			javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 			javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="eliminaFavorito"
+        parameterMap="eliminaFavoritoIN"
+        statementType="CALLABLE">
+        
+        { call PCK_SEGURIDAD.prc_eliminaFavorito(?,?,?,?,?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO FNC_DATOSVALIDAUSUARIO: Obtiene informacion para validar regla de negocios -->
+    <resultMap id="usuarioOUT" type="cl.bluex.seguridad.to.UsuarioTo" >
+        <result property="codigoUsuario" 	column="USUA_CDG" />
+        <result property="nombreUsuario" 	column="USUA_NMB"/>
+        <result property="roles" 			column="USUA_ROLES"/>
+        <result property="username" 		column="usua_id"/>
+    </resultMap>
+    
+    <parameterMap id="usuarioIN" type="map">
+    	<parameter property="resultado"     javaType="java.sql.ResultSet"   jdbcType="CURSOR"   			mode="OUT" resultMap="usuarioOUT"/>
+        <parameter property="token" 		javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codError" 		jdbcType="NUMERIC" 				javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 	jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="obtieneDatosUsuario"
+        statementType="CALLABLE"
+        parameterMap="usuarioIN"
+        resultMap="usuarioOUT">
+        
+        { ? = call PCK_SEGURIDAD.fnc_obtieneDatosUsuario(?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO FNC_DATOSVALIDAUSUARIO: Obtiene informacion para validar regla de negocios -->
+    
+    <parameterMap id="validaTokenIN" type="map">
+        <parameter property="token"     javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+        <parameter property="codError"  javaType="int" 				jdbcType="NUMERIC" mode="INOUT" />
+        <parameter property="descError" javaType="java.lang.String" jdbcType="VARCHAR" mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="validaToken"
+        statementType="CALLABLE"
+        parameterMap="validaTokenIN">
+        
+        { call PCK_SEGURIDAD.prc_validatoken(?,?,?)}
+    </select>
+<!-- FIN -->
+
+<!-- INICIO prc_traemenuopcionesfrecuentes -->
+    
+    <resultMap id="obtRolUsuaRM" type="cl.bluex.seguridad.to.RolTO" >
+        <result property="codigo"	 	column="role_cdg" />
+		<result property="descripcion"  column="Role_Nmbr" />
+    </resultMap>
+    
+    <parameterMap id="obtRolUsuaPM" type="map" >
+        <parameter property="resultado"     	javaType="java.sql.ResultSet"   jdbcType="CURSOR"   			mode="OUT" resultMap="obtRolUsuaRM"/>
+        <parameter property="token"  			javaType="java.lang.String"     jdbcType="VARCHAR"  			mode="IN"/>
+        <parameter property="codigoSistema" 	javaType="int"     				jdbcType="NUMERIC"  			mode="IN"/>
+        <parameter property="codigoAplicacion" 	javaType="int"     				jdbcType="NUMERIC"  			mode="IN"/>
+        <parameter property="codError" 			javaType="int" 					jdbcType="NUMERIC"				mode="INOUT" />
+		<parameter property="descError" 		 javaType="java.lang.String" 	jdbcType="VARCHAR"	mode="INOUT" />
+    </parameterMap>
+    
+    <select id="obtieneRolUsuario"
+        statementType="CALLABLE"
+        parameterMap="obtRolUsuaPM"
+        resultMap="obtRolUsuaRM">
+        
+        {? = call PCK_SEGURIDAD.fnc_obtienerolusuario(?,?,?,?,?)}
+    </select>
+    <!-- FIN -->
+</mapper>

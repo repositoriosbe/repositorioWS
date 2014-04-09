@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cl.bluex.verificacion.mapper.VerificacionMapper">
+
+<!-- INICIO pck_verificacion.fnc_crearBatch -->
+	<parameterMap id="crearBatchPM" type="map">
+		<parameter property="resultado" 		jdbcType="NUMERIC" 	javaType="long" 				mode="OUT"/>
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoMoneda" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="crearBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="crearBatchPM">
+
+		{ ? = call pck_verificacion.fnc_crearBatch(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.fnc_crearBatch -->
+
+<!-- INICIO pck_verificacion.prc_cambioEstadoBatch -->
+	<parameterMap id="cambioEstadoBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoEstadoBatch" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="cambioEstadoBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="cambioEstadoBatchPM">
+
+		{ call pck_verificacion.prc_cambioEstadoBatch(?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_cambioEstadoBatch -->
+
+<!-- INICIO pck_verificacion.prc_cerrarBatch -->
+	<parameterMap id="cerrarBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="cerrarBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="cerrarBatchPM">
+
+		{ call pck_verificacion.prc_cerrarBatch(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_cerrarBatch -->
+
+<!-- INICIO pck_verificacion.prc_eliminarBatch -->
+	<parameterMap id="eliminarBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminarBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="eliminarBatchPM">
+
+		{ call pck_verificacion.prc_eliminarBatch(?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_eliminarBatch -->
+
+<!-- INICIO pck_verificacion.prc_insertarDetalleBatch -->
+	<parameterMap id="insDetBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="insertarDetalleBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="insDetBatchPM">
+
+		{ call pck_verificacion.prc_insertarDetalleBatch(?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_insertarDetalleBatch -->
+               <!--Optional:-->
+<!-- INICIO pck_verificacion.prc_eliminarDetalleBatch -->
+	<parameterMap id="elimDetBatchPM" type="map">
+		<parameter property="resultado" 		javaType="java.lang.Integer" 	jdbcType="NUMERIC" 				mode="OUT" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 				javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 				javaType="long" 				mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 				javaType="long" 				mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 				javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 				javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="eliminarDetalleBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="elimDetBatchPM" flushCache="true" useCache="false">
+
+		{ ? = call pck_verificacion.prc_eliminarDetalleBatch(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_eliminarDetalleBatch -->
+
+<!-- INICIO pck_verificacion.prc_validaDetalleBatch -->
+	<parameterMap id="valDetBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="validaDetalleBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="valDetBatchPM">
+
+		{ call pck_verificacion.prc_validaDetalleBatch(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_validaDetalleBatch -->
+
+<!-- INICIO pck_verificacion.prc_cambioEstadoDetalleBatch -->
+	<parameterMap id="camEstDetBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoEstadoDcbt" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="cambioEstadoDetalleBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="camEstDetBatchPM">
+
+		{ call pck_verificacion.prc_cambioEstadoDetalleBatch(?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_cambioEstadoDetalleBatch -->
+
+<!-- INICIO pck_verificacion.fnc_obtieneAcronimos -->
+
+	<resultMap id="obtAcronimoRM" type="cl.bluex.verificamodel.to.AcronimoTO">
+		<result property="codigo" 		column="ptbt_posta" />
+		<result property="descripcion" 	column="ptbt_desc" />
+	</resultMap>
+
+	<parameterMap id="obtAcronimoPM" type="map">
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtAcronimoRM" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoTipo" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneAcronimos" 
+	    	statementType="CALLABLE"
+			parameterMap="obtAcronimoPM" 
+			resultMap="obtAcronimoRM">
+
+		{ ? = call pck_verificacion.fnc_obtieneAcronimos(?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.fnc_obtieneAcronimos -->
+
+<!-- INICIO pck_verificacion.fnc_obtieneBatchOrigen -->
+	<resultMap id="obtBatchOrigRM" type="cl.bluex.verificamodel.to.BatchTO">
+		<result property="numeroBatch" 			column="nmrBatch" />
+		<result property="fechaCreacionBatch" 	column="ecbt_fch" />
+		<result property="codigoEstadoBatch" 	column="ecbt_estado" />
+		<result property="codigoEmpresa" 		column="empf_cdg" />
+		<result property="codigoPosta" 			column="ecbt_posta" />
+		<result property="codigoEncabezado" 	column="ecbt_cdg" />
+		<result property="numeroSecuencia" 		column="ecbt_nmr" />
+		<result property="fechaCierreBatch" 	column="ecbt_fch_cierre" />
+		<result property="totalDetalleBatch" 	column="ecbt_tot_awb" />
+	</resultMap>
+
+	<parameterMap id="obtBatchOrigPM" type="map">
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtBatchOrigRM" />
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="fechaCreacionBatch" jdbcType="VARCHAR" javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEstadoBatch" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneBatchOrigen" 
+	    	statementType="CALLABLE"
+			parameterMap="obtBatchOrigPM"
+			resultMap="obtBatchOrigRM">
+		{ ? = call pck_verificacion.fnc_obtieneBatchOrigen(?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.fnc_obtieneBatchOrigen -->
+
+<!-- INICIO pck_verificacion.fnc_obtieneOsBatch -->
+	<resultMap id="obtOsBatchRM" type="cl.bluex.verificamodel.to.OserTO">
+		<result property="eevvNmrSerie" 		column="eevv_nmr_serie" />
+		<result property="eevvNmrId" 			column="eevv_nmr_id" />
+		<result property="fechaCreacionOs" 		column="oser_fch_creacion" />
+		<result property="ctacteEmba" 			column="ctaCteEmba" />
+		<result property="nombreCtacte" 		column="nmbrCtaCte" />
+		<result property="centroCosto" 			column="oser_cdg_cc" />
+		<result property="codigoPostaOrigen" 	column="psta_cdg_origen" />
+		<result property="codigoPostaDestino" 	column="psta_cdg_destino" />
+		<result property="codigoTipoServicio" 	column="tpsv_cdg" />
+		<result property="codigoServComple" 	column="csor_tpsv_cdg" />
+		<result property="cntpiezas" 			column="oser_cnt_piezas" />
+		<result property="pesofisico" 			column="oser_peso_fisico" />
+		<result property="pesovolumen" 			column="oser_peso_volumen" />
+		<result property="montoCOD" 			column="montoCOD" />
+		<result property="vlorimptopp" 			column="oser_vlor_impto_pp" />
+		<result property="vlorimptocc" 			column="oser_vlor_impto_cc" />
+		<result property="vlorfletepp" 			column="oser_vlor_flete_pp" />
+		<result property="vlorfletecc" 			column="oser_vlor_flete_cc" />
+		<result property="vlorvalorapp" 		column="oser_vlor_valora_pp" />
+		<result property="vlorvaloracc" 		column="oser_vlor_valora_cc" />
+		<result property="vlorvariospp" 		column="oser_vlor_varios_pp" />
+		<result property="vlorvarioscc" 		column="oser_vlor_varios_cc" />
+		<result property="vlorseguro" 			column="oser_vlor_seguro" />
+		<result property="vlordeclarado" 		column="oser_vlor_declarado" />
+		<result property="vloraduana" 			column="oser_vlor_aduana" />
+		<result property="tarifa" 				column="oser_tarifa" />
+		<result property="clhlcodigoEmbarque" 	column="clhl_cdg_emba" />
+		<result property="clhlsucursalEmbarque" column="clhl_scrs_emba" />
+		<result property="tpclcodigoEmbarque" 	column="tpcl_cdg_emba" />
+		<result property="numeroBatch" 			column="nmrBatch" />
+	</resultMap>
+
+	<parameterMap id="obtOsBatchPM" type="map">
+		<parameter property="resultado" 			jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="obtOsBatchRM" />
+		<parameter property="codigoEmpresa" 		jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 			jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="fechaCreacionBatch" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 		mode="IN" />
+		<parameter property="numeroDocumentoDesde" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="numeroDocumentoHasta" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codError" 				jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 			jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="obtieneOsBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="obtOsBatchPM"
+			resultMap="obtOsBatchRM">
+		{ ? = call pck_verificacion.fnc_obtieneOsBatch(?,?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.fnc_obtieneOsBatch -->
+
+<!-- INICIO pck_verificacion.prc_actualizaOsBatch -->
+	<parameterMap id="actOsBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoProducto" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoTipoServicio" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="clhlCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="long" 			mode="IN" />
+		<parameter property="clhlSucursalEmbarque" 	jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="tpclCodigoEmbarque" 	jdbcType="NUMERIC" 	javaType="int" 				mode="IN" />
+		<parameter property="fechaCreacionOser" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoPostaOrigen" jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoPostaDestino" 	jdbcType="VARCHAR" 	javaType="java.lang.String" mode="IN" />
+		<parameter property="centroCosto" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="pesoFisico" 		jdbcType="NUMERIC" 	javaType="float" 				mode="IN" />
+		<parameter property="codigoEstadoDcbt" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="actualizaOsBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="actOsBatchPM">
+		{ call pck_verificacion.prc_actualizaOsBatch(?,?,?,?,?,?,?,?,?,?,
+													 ?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_actualizaOsBatch -->
+
+<!-- INICIO pck_verificacion.prc_reversarBatch -->
+	<parameterMap id="revBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="reversaBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="revBatchPM">
+
+		{ call pck_verificacion.prc_reversarBatch(?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_reversarBatch -->
+
+<!-- INICIO pck_verificacion.prc_reasignarBatch -->
+	<parameterMap id="reasignaBatchPM" type="map">
+		<parameter property="codigoEmpresa" 	jdbcType="NUMERIC" 	javaType="int" 					mode="IN" />
+		<parameter property="codigoPosta" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codigoEncabezado" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="numeroSecuencia" 	jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="eevvNmrId" 		jdbcType="NUMERIC" 	javaType="long" 				mode="IN" />
+		<parameter property="codigoUsuario" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="reasignaBatch" 
+	    	statementType="CALLABLE"
+			parameterMap="reasignaBatchPM">
+
+		{ call pck_verificacion.prc_reasignarBatch(?,?,?,?,?,?,?,?)}
+	    
+	</select>
+<!-- FIN pck_verificacion.prc_reasignarBatch -->
+
+</mapper>

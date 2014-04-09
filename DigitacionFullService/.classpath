@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="ejbModule">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="test">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/DigitacionModel"/>
+	<classpathentry kind="var" path="lib_comunes/junit-4.11.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/WSCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SeguridadPersistencia"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SeguridadService"/>
+	<classpathentry kind="var" path="lib_comunes/jboss-ejb-api_3.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="var" path="lib_comunes/jboss-interceptors-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SeguridadModel"/>
+	<classpathentry kind="var" path="lib_comunes/jbossws-api-1.0.1.Final.jar"/>
+	<classpathentry kind="var" path="lib_comunes/log4j-1.2.16.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DigitacionFullPersistencia"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
