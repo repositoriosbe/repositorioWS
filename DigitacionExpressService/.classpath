@@ -24,7 +24,6 @@
 	<classpathentry kind="var" path="lib_comunes/jboss-ejb-api_3.1_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="var" path="lib_comunes/jboss-interceptors-api_1.1_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="var" path="lib_comunes/log4j-1.2.16.jar"/>
-	<classpathentry kind="var" path="lib_comunes"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DigitacionExpressPersistencia"/>
 	<classpathentry kind="var" path="lib_comunes/jbossws-api-1.0.1.Final.jar"/>
 	<classpathentry kind="var" path="lib_comunes/junit-4.11.jar"/>

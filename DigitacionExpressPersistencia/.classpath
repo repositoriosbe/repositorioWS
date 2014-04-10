@@ -25,6 +25,5 @@
 	<classpathentry kind="var" path="lib_comunes/spring-beans-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="var" path="lib_comunes/log4j-1.2.16.jar"/>
 	<classpathentry kind="var" path="lib_comunes/junit-4.11.jar"/>
-	<classpathentry kind="var" path="lib_comunes"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
