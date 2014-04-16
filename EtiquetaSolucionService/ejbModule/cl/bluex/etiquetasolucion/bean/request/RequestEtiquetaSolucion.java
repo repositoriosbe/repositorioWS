@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import cl.bluex.etiquetasolucion.bean.ParametrosEntrada;
+import cl.bluex.etiquetasolucion.bean.Inquietud;
 
 /**
  * The Class RequestEtiquetaSolucion.
@@ -18,8 +18,7 @@ public class RequestEtiquetaSolucion {
 	
 	/** The inp etiqueta solucion. */
 	@XmlElement(required = true)
-	private ParametrosEntrada parametrosEntrada;
-	
+	private Inquietud inquietud;
 	
 	
 	/**
@@ -29,22 +28,24 @@ public class RequestEtiquetaSolucion {
 		super();
 	}
 
-
-
 	/**
-	 * @return the parametrosEntrada
+	 * Gets the parametros entrada.
+	 *
+	 * @return the parametros entrada
 	 */
-	public ParametrosEntrada getParametrosEntrada() {
-		return parametrosEntrada;
+	public Inquietud getParametrosEntrada() {
+		return inquietud;
 	}
 
 
 
 	/**
-	 * @param parametrosEntrada the parametrosEntrada to set
+	 * Sets the parametros entrada.
+	 *
+	 * @param parametrosEntrada the new parametros entrada
 	 */
-	public void setParametrosEntrada(ParametrosEntrada parametrosEntrada) {
-		this.parametrosEntrada = parametrosEntrada;
+	public void setParametrosEntrada(Inquietud parametrosEntrada) {
+		this.inquietud = parametrosEntrada;
 	}
 
 

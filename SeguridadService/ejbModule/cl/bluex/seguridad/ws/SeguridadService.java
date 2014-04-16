@@ -6,14 +6,17 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
 import cl.bluex.seguridad.to.OpcionesMenuTo;
 import cl.bluex.seguridad.to.TokenUsuarioTo;
 import cl.bluex.seguridad.to.UsuarioTo;
+import cl.bluex.seguridad.bean.request.RequestDatosUsuario;
 import cl.bluex.seguridad.bean.request.RequestObtieneOpcionesMenu;
 import cl.bluex.seguridad.bean.request.RequestObtieneRolUsuario;
+import cl.bluex.seguridad.bean.response.ResponseDatosUsuario;
 import cl.bluex.seguridad.bean.response.ResponseObtieneRolUsuario;
 import cl.bluex.ws.common.exceptions.BluexException;
 import cl.bluex.ws.common.head.Cabecera;
@@ -73,6 +76,22 @@ public interface SeguridadService {
 		    partName = "Cabecera",
 		    targetNamespace = "http://SeguridadWS/BXSEG001_login/SeguridadPortType") Cabecera cabecera)
 	    throws BluexException;
+    
+    
+    
+
+	@WebMethod(
+		operationName = "getValidarUsuario",
+		action = "http://http://SeguridadWS/BXSEG001_login/SeguridadPortType/getValidarUsuario")
+	ResponseDatosUsuario getValidarUsuario(
+			@WebParam(
+				name = "requestDatosUsuario",
+				targetNamespace = "http://SeguridadWS/BXSEG001_login/SeguridadPortType/",
+				partName = "requestDatosUsuario",
+				header = false) RequestDatosUsuario request)
+			throws BluexException;
+
+    
 
     /**
      * Este método se encarga de obtener las opciones para el menu del usuario.
@@ -367,4 +386,13 @@ public interface SeguridadService {
 		    partName = "Cabecera",
 		    targetNamespace = "http://SeguridadWS/BXSEG001_login/SeguridadPortType") Cabecera cabecera)
 	    throws BluexException;
+
+
+
+
+
+    
+    
+    
+    
 }

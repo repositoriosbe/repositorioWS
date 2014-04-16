@@ -2,8 +2,8 @@ package cl.bluex.etiquetasolucion;
 
 import java.util.List;
 
-import cl.bluex.etiquetasolucionmodel.to.ParametrosEntradaTO;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
+import cl.bluex.etiquetasolucionmodel.to.InquietudTO;
+import cl.bluex.etiquetasolucionmodel.to.SolucionTO;
 import cl.bluex.ws.common.exceptions.BluexException;
 
 
@@ -19,9 +19,9 @@ public interface EtiquetaSolucionDao {
 	/**
 	 * Metodo.
 	 * 
-	 * @param to {@link ParametrosEntradaTO}
-	 * @return lista de {@link ParametrosSalidaTO}
+	 * @param to {@link InquietudTO}
+	 * @return lista de {@link SolucionTO}
 	 */
-	List<ParametrosSalidaTO> getSolucionEtiqueta(ParametrosEntradaTO to) throws BluexException;
+	List<SolucionTO> getSolucionEtiqueta(InquietudTO to) throws BluexException;
 	
 }

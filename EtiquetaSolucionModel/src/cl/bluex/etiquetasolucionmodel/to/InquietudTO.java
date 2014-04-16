@@ -6,7 +6,7 @@ package cl.bluex.etiquetasolucionmodel.to;
  *
  * @author rmoscoso
  */
-public class ParametrosEntradaTO {
+public class InquietudTO {
 
 	/** The fecha inicio. */
 	private String	fechaInicio;
@@ -40,7 +40,7 @@ public class ParametrosEntradaTO {
 	/**
 	 * crea instancia de ParametrosEntradaTO.
 	 */
-	public ParametrosEntradaTO() {
+	public InquietudTO() {
 		super();
 	}
 

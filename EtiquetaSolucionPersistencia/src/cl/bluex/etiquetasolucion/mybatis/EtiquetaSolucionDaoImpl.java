@@ -12,8 +12,8 @@ import org.apache.log4j.Logger;
 
 import cl.bluex.etiquetasolucion.EtiquetaSolucionDao;
 import cl.bluex.etiquetasolucion.mapper.EtiquetaSolucionMapper;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosEntradaTO;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
+import cl.bluex.etiquetasolucionmodel.to.InquietudTO;
+import cl.bluex.etiquetasolucionmodel.to.SolucionTO;
 import cl.bluex.ws.common.dao.AbstractDao;
 import cl.bluex.ws.common.exceptions.BluexException;
 
@@ -52,8 +52,8 @@ public class EtiquetaSolucionDaoImpl extends AbstractDao<EtiquetaSolucionMapper>
 	 * @see cl.bluex.etiquetasolucion.EtiquetaSolucionDao#getSolucionEtiqueta(cl.bluex.etiquetasolucionmodel.to.Inp_EtiquetaSolucionTO)
 	 */
 	@Override
-	public List<ParametrosSalidaTO> getSolucionEtiqueta(
-			final ParametrosEntradaTO to) throws BluexException {
+	public List<SolucionTO> getSolucionEtiqueta(
+			final InquietudTO to) throws BluexException {
 		
 		LOGGER.info("[getSolucionEtiqueta] Iniciando llamada PL :");
 		
@@ -75,7 +75,7 @@ public class EtiquetaSolucionDaoImpl extends AbstractDao<EtiquetaSolucionMapper>
 		this.esExcepcion();
 		
 		@SuppressWarnings(UNCHECKED)
-		final List<ParametrosSalidaTO> resultado = (List<ParametrosSalidaTO>) params.get(RESULTADO);
+		final List<SolucionTO> resultado = (List<SolucionTO>) params.get(RESULTADO);
 		return resultado;
 	
 	}

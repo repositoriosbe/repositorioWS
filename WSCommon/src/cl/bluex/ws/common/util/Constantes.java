@@ -294,6 +294,7 @@ public final class Constantes {
 	
 	public static final String RENDIDA = "rendida";
 	public static final String RESULTADO = "resultado";
+	public static final String SUB_RESULTADO = "sub_resultado";
 	public static final String RGN_ESTADO_AGENTE = "rgnEstadoAgente";
 	public static final String RUT = "rut";
 	public static final String RUTA = "ruta";

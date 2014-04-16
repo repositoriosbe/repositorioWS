@@ -22,16 +22,16 @@
     
 <!-- INICIO FNC_DATOSVALIDAUSUARIO: Obtiene informacion para validar regla de negocios -->
     <resultMap id="usuarioValidoOUT" type="cl.bluex.seguridad.to.UsuarioValido" >
-        <result property="codigoUsuario"        column="USUA_CDG" />
-        <result property="nombreUsuario"        column="USUA_NMB"/>   
-        <result property="fechaInicioVigente"   column="VDUS_FCH_INI_VIG"/>   
-        <result property="fechaFinVigente"      column="VDUS_FCH_FIN_VIG"/>   
-        <result property="codTipoUsuario"       column="TPEU_CDG"/>   
-        <result property="numIntentosFallidosIngreso" column="VDUS_INT_FALLIDOS"/>
-        <result property="totalIntentosFallidos" column="TOT_INT_FALLIDOS"/>
-        <result property="cantidadSesiones"     column="USUA_CNT_SESIONES"/>
-        <result property="urlFoto"              column="USUA_URL_FOTO"/>
-        <result property="roles"                column="USUA_ROLES"/>
+        <result property="codigoUsuario"        		column="USUA_CDG" />
+        <result property="nombreUsuario"        		column="USUA_NMB"/>   
+        <result property="fechaInicioVigente"   		column="VDUS_FCH_INI_VIG"/>   
+        <result property="fechaFinVigente"      		column="VDUS_FCH_FIN_VIG"/>   
+        <result property="codTipoUsuario"       		column="TPEU_CDG"/>   
+        <result property="numIntentosFallidosIngreso"   column="VDUS_INT_FALLIDOS"/>
+        <result property="totalIntentosFallidos" 		column="TOT_INT_FALLIDOS"/>
+        <result property="cantidadSesiones"     		column="USUA_CNT_SESIONES"/>
+        <result property="urlFoto"              		column="USUA_URL_FOTO"/>
+        <result property="roles"                		column="USUA_ROLES"/>
     </resultMap>
     
     <parameterMap id="usuarioValidoPM" type="map">
@@ -50,6 +50,46 @@
         { ? = call PCK_SEGURIDAD.fnc_DatosValidaUsuario(?,?,?,?)}
     </select>
 <!-- FIN -->
+
+    <resultMap id="datosusuarioRM" type="cl.bluex.seguridad.to.NewDatosUsuarioTO" >
+        <result property="codigoUsuario"        	column="USUA_CDG" />
+        <result property="username"        			column="USUA_NMB"/>   
+        <result property="fechaInicioVigente"   	column="VDUS_FCH_INI_VIG"/>   
+        <result property="fechaFinVigente"      	column="VDUS_FCH_FIN_VIG"/>   
+        <result property="codTipoUsuario"       	column="TPEU_CDG"/>   
+        <result property="cantidadSesiones"     	column="USUA_CNT_SESIONES"/>
+        <result property="urlFoto"              	column="USUA_URL_FOTO"/>
+        <result property="token"              		column="USUA_URL_FOTO"/>
+    </resultMap>
+    
+    <resultMap id="empresapaisRM" type="cl.bluex.seguridad.to.NewEmpresaPaisTO" >
+        <result property="codigoSistema"      	column="SIST_CDG" />
+        <result property="codigoAplicacion"   	column="APPS_CDG" />
+        <result property="codigoRol"        	column="ROLE_CDG" />
+        <result property="nombreRol"        	column="ROLE_DSC" />
+        <result property="codigoEmpresa"        column="EMPR_CDG" />
+        <result property="codigoPais"        	column="PSES_CDG"/>   
+        
+    </resultMap>
+    
+    <parameterMap id="getValidarUsuarioPM" type="map">
+        <parameter property="username"    	 javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="password"     	 javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="token"    		 javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="IN"/>
+        <parameter property="resultado"   	 javaType="java.sql.ResultSet" 	jdbcType="CURSOR"   mode="OUT" resultMap="datosusuarioRM"/>
+        <parameter property="sub_resultado"  javaType="java.sql.ResultSet" 	jdbcType="CURSOR" 	mode="OUT" resultMap="empresapaisRM"/>
+        <parameter property="codError"    	 javaType="int" 				jdbcType="NUMERIC"  mode="INOUT" />
+        <parameter property="descError"   	 javaType="java.lang.String" 	jdbcType="VARCHAR"  mode="INOUT"/>
+    </parameterMap>
+    
+    <select id="getValidarUsuario" 	
+    		parameterMap="getValidarUsuarioPM" 
+    		statementType="CALLABLE">
+        
+        {call PCK_SEGURIDAD.prc_datosValidaUsuario_New(?,?,?,?,?,?,?)}
+        
+    </select>
+
     
 <!-- INICIO FNC_ACTUALIZANUMEROINTENTOS: Actualizar Numero de intentos -->
     <parameterMap id="actualizarNroIntentosIN" type="map">

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
+import cl.bluex.etiquetasolucionmodel.to.SolucionTO;
 
 
 // TODO: Auto-generated Javadoc
@@ -15,7 +15,7 @@ import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
  * The Class ParametrosSalida.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "parametrosSalida",	
+@XmlType(name = "solucion",	
 	propOrder = {
 		"codigoInquietud",			
 		"codEspecieValorada",		
@@ -33,7 +33,7 @@ import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
 		"fechaPiezaER",			
 		"cantidadImpresion",	
 		})
-public class ParametrosSalida {
+public class Solucion {
 
 	/** The codigo inquietud. */
 	private Integer codigoInquietud;			
@@ -83,7 +83,7 @@ public class ParametrosSalida {
 	/**
 	 * Instantiates a new out_ etiqueta solucion.
 	 */
-	public ParametrosSalida() {
+	public Solucion() {
 		super();
 	}
 	
@@ -93,7 +93,7 @@ public class ParametrosSalida {
 	 *
 	 * @param to the to
 	 */
-	public ParametrosSalida(final ParametrosSalidaTO to) {
+	public Solucion(final SolucionTO to) {
 		if (to != null) {
 			
 			this.cantidadImpresion = to.getCantidadImpresion();

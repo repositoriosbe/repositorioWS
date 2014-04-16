@@ -7,7 +7,7 @@
 
 <!-- INICIO pck_etiqueta_solucion.get_solucion_etiqueta -->
 
-	<resultMap id="getSolucionEtiquetaRM" type="cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO">
+	<resultMap id="getSolucionEtiquetaRM" type="cl.bluex.etiquetasolucionmodel.to.SolucionTO">
 		<result property="codigoInquietud" 			column="inquiry_id" />
 		<result property="codEspecieValorada" 		column="eevv_nmr_serie" />
 		<result property="solucionTxt" 				column="solution_txt" />

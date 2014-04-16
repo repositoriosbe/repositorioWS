@@ -4,11 +4,11 @@ import java.math.BigInteger;
 import java.util.Date;
 
 
-// TODO: Auto-generated Javadoc
+
 /**
- * The Class ParametrosSalidaTO.
+ * The Class SolucionTO.
  */
-public class ParametrosSalidaTO {
+public class SolucionTO {
 
 
 	/** The codigo inquietud. */
@@ -62,7 +62,7 @@ public class ParametrosSalidaTO {
 	/**
 	 * Instantiates a new parametros salida to.
 	 */
-	public ParametrosSalidaTO() {
+	public SolucionTO() {
 		super();
 	}
 

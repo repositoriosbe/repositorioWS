@@ -12,16 +12,16 @@ import org.apache.log4j.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import cl.bluex.etiquetasolucion.EtiquetaSolucionDao;
-import cl.bluex.etiquetasolucion.bean.ParametrosEntrada;
-import cl.bluex.etiquetasolucion.bean.ParametrosSalida;
+import cl.bluex.etiquetasolucion.bean.Inquietud;
+import cl.bluex.etiquetasolucion.bean.Solucion;
 import cl.bluex.etiquetasolucion.bean.request.RequestEtiquetaSolucion;
 import cl.bluex.etiquetasolucion.bean.response.ResponseEtiquetaSolucion;
 import cl.bluex.etiquetasolucion.factory.DaoFactory;
 import cl.bluex.etiquetasolucion.factory.EtiquetaSolucionDaoFactory;
 import cl.bluex.etiquetasolucion.tool.Mappers;
 import cl.bluex.etiquetasolucion.ws.session.SessionInterceptor;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosEntradaTO;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
+import cl.bluex.etiquetasolucionmodel.to.InquietudTO;
+import cl.bluex.etiquetasolucionmodel.to.SolucionTO;
 import cl.bluex.ws.common.exceptions.BluexException;
 import cl.bluex.ws.common.head.Cabecera;
 import cl.bluex.ws.common.util.Util;
@@ -62,7 +62,7 @@ public class EtiquetaSolucionServiceImpl implements EtiquetaSolucionService {
 	 * @see cl.bluex.etiquetasolucion.ws.EtiquetaSolucionService#getSolucionEtiqueta(cl.bluex.etiquetasolucion.bean.request.RequestEtiquetaSolucion, cl.bluex.ws.common.head.Cabecera)
 	 */
 	@Override
-	public ResponseEtiquetaSolucion getSolucionEtiqueta(
+	public ResponseEtiquetaSolucion getEtiquetaSolucion(
 			final RequestEtiquetaSolucion request,
 			final Cabecera cabecera) 
 			throws BluexException {
@@ -74,12 +74,12 @@ public class EtiquetaSolucionServiceImpl implements EtiquetaSolucionService {
 		final EtiquetaSolucionDao generadorDao = daoFactory.getEtiquetaSolucionDao();
 		
 		try {
-			final ParametrosEntrada parametrosEntrada = request.getParametrosEntrada();
-			validacion(parametrosEntrada);
+			final Inquietud entrada = request.getParametrosEntrada();
+			validacion(entrada);
 			
-			final ParametrosEntradaTO parametrosSalida = Mappers.mapeaTOentrada(parametrosEntrada);
-			final List<ParametrosSalidaTO> outputTO = generadorDao.getSolucionEtiqueta(parametrosSalida);
-			final List<ParametrosSalida> respuesta = Mappers.mapeaTOsalida(outputTO);
+			final InquietudTO entradaTO = Mappers.mapeaTOentrada(entrada);
+			final List<SolucionTO> outputTO = generadorDao.getSolucionEtiqueta(entradaTO);
+			final List<Solucion> respuesta = Mappers.mapeaTOsalida(outputTO);
 			
 			response = new ResponseEtiquetaSolucion(respuesta);
 			
@@ -96,7 +96,7 @@ public class EtiquetaSolucionServiceImpl implements EtiquetaSolucionService {
 	 * @param parametro
 	 * @throws BluexException
 	 */
-	private void validacion(final ParametrosEntrada parametro)
+	private void validacion(final Inquietud parametro)
 			throws BluexException {
 		
 		Util.validaObligatorio(parametro.getFechaInicio(), "fechaInicio");

@@ -1,18 +1,21 @@
 package cl.bluex.etiquetasolucion.bean;
 
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import cl.bluex.etiquetasolucionmodel.to.ParametrosEntradaTO;
+import cl.bluex.etiquetasolucionmodel.to.InquietudTO;
 
 
 /**
  * The Class ParametrosEntrada.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "parametrosEntrada",	
+@XmlType(name = "inquietud",	
 	propOrder = {
 		"fechaInicio",		
 		"fechaFin",		
@@ -24,21 +27,29 @@ import cl.bluex.etiquetasolucionmodel.to.ParametrosEntradaTO;
 		"sucursalCliente",		
 		"codigoTipoCliente",	
 		})
-public class ParametrosEntrada {
+public class Inquietud implements Serializable {
+
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8473916122301754616L;
 
 	/** The fecha inicio. */
+	@XmlElement(required = true)
 	private String	fechaInicio;
 	
 	/** The fecha fin. */
+	@XmlElement(required = true)
 	private String	fechaFin;
 	
 	/** The codigo empresa. */
+	@XmlElement(required = true)
 	private String codigoEmpresa;	
 	
 	/** The codigo tipo documento. */
+	@XmlElement(required = true)
 	private String	codigoTipoDocumento;	
 	
 	/** The codigo oficina. */
+	@XmlElement(required = true)
 	private String	codigoOficina;	
 	
 	/** The codigo posta. */
@@ -56,7 +67,7 @@ public class ParametrosEntrada {
 	/**
 	 * Instantiates a new ParametrosEntrada.
 	 */
-	public ParametrosEntrada() {
+	public Inquietud() {
 		super();
 	}
 	
@@ -65,7 +76,7 @@ public class ParametrosEntrada {
 	 *
 	 * @param to the to
 	 */
-	public ParametrosEntrada(final ParametrosEntradaTO to) {
+	public Inquietud(final InquietudTO to) {
 		if (to != null) {
 			
 			this.codigoCliente = to.getCodigoCliente();

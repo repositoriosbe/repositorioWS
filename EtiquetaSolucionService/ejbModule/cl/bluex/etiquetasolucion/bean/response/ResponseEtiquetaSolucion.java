@@ -6,10 +6,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-import cl.bluex.etiquetasolucion.bean.ParametrosSalida;
+import cl.bluex.etiquetasolucion.bean.Solucion;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ResponseEtiquetaSolucion.
  *
@@ -19,8 +18,8 @@ import cl.bluex.etiquetasolucion.bean.ParametrosSalida;
 @XmlType(name = "responseEtiquetaSolucion")
 public class ResponseEtiquetaSolucion {
 
-	/** The out etiqueta soulucion. */
-	List<ParametrosSalida> parametrosSalida;
+	/** The lista solucion. */
+	List<Solucion> listaSolucion;
 	
 	/**
 	 * Instantiates a new response etiqueta solucion.
@@ -32,33 +31,29 @@ public class ResponseEtiquetaSolucion {
 	/**
 	 * Instantiates a new response etiqueta solucion.
 	 *
-	 * @param paramSalida the param salida
+	 * @param listaSolucion the lista solucion
 	 */
-	public ResponseEtiquetaSolucion(final List<ParametrosSalida> paramSalida) {
+	public ResponseEtiquetaSolucion(final List<Solucion> listaSolucion) {
 		super();
-		this.parametrosSalida = paramSalida;
+		this.listaSolucion = listaSolucion;
 	}
 
 	/**
 	 * Gets the parametros salida.
 	 *
-	 * @return the parametrosSalida
+	 * @return the parametros salida
 	 */
-	public List<ParametrosSalida> getParametrosSalida() {
-		return parametrosSalida;
+	public List<Solucion> getParametrosSalida() {
+		return listaSolucion;
 	}
 
 	/**
 	 * Sets the parametros salida.
 	 *
-	 * @param parametrosSalida the parametrosSalida to set
+	 * @param listaSolucion the new parametros salida
 	 */
-	public void setParametrosSalida(List<ParametrosSalida> parametrosSalida) {
-		this.parametrosSalida = parametrosSalida;
+	public void setParametrosSalida(List<Solucion> listaSolucion) {
+		this.listaSolucion = listaSolucion;
 	}
-
-
-
-	
 	
 }

@@ -2,39 +2,51 @@ package cl.bluex.seguridad.mapper;
 
 import java.util.Map;
 
-import cl.bluex.seguridad.to.Autenticacion;
-import cl.bluex.seguridad.to.FavoritoTo;
-import cl.bluex.seguridad.to.TokenUsuarioTo;
 import cl.bluex.seguridad.to.UsuarioTo;
 
 /**
- * @author Edgardo Herrera
+ * The Interface SeguridadMapper.
  *
+ * @author Edgardo Herrera
  */
 public interface SeguridadMapper {
 
 	/**
 	 * Mapper autenticacion.
 	 *
-	 * @param {@link Autenticacion}
+	 * @param params the params
 	 */
     void autenticacion(Map<String, Object> params);
+	
 	/**
 	 * Mapper validarUsuario.
 	 *
-	 * @param datos de entrada
+	 * @param params the params
 	 */
 	void validarUsuario(Map<String, Object> params);
+	
+	
+	/**
+	 * Mapper validarUsuario.
+	 *
+	 * @param params the params
+	 * @return the validar usuario
+	 */
+	void getValidarUsuario(Map<String, Object> params);
+	
 	/**
 	 * Mapper actualizarNroIntentos.
 	 *
-	 * @param {@link String username}
+	 * @param params the params
+	 * @return the integer
 	 */
 	Integer actualizarNroIntentos(Map<String, Object> params);
+	
 	/**
 	 * Mapper insertaTokenUsuario.
 	 *
-	 * @param datos de entrada
+	 * @param params the params
+	 * @return the integer
 	 */
 	Integer insertaTokenUsuario(Map<String, Object> params);
 	/**
@@ -55,40 +67,48 @@ public interface SeguridadMapper {
 	 * @param params de entrada
 	 */
 	void obtieneOpcionesFrecuentes(Map<String, Object> params);
+	
 	/**
 	 * Mapper eliminarToken.
 	 *
-	 * @param {@link String codigoToken}
+	 * @param params the params
 	 */
 	void eliminarToken(Map<String, Object> params);
+	
 	/**
 	 * Mapper obtenerUsuarioPassword.
 	 *
-	 * @param {@link UsuarioTo usuario}
+	 * @param params the params
+	 * @return the usuario to
 	 */
 	UsuarioTo obtenerUsuarioPassword(Map<String, Object> params);
+	
 	/**
 	 * Mapper actualizarPassword.
 	 *
 	 * @param params de entrada
+	 * @return the integer
 	 */
 	Integer actualizarPassword(Map<String, Object> params);
+	
 	/**
 	 * Mapper insertaFavorito.
 	 *
-	 * @param {@link FavoritoTo favorito}
+	 * @param params the params
 	 */
 	void insertaFavorito(Map<String, Object> params);
+	
 	/**
 	 * Mapper aumentaFrecuenciaOpc.
 	 *
-	 * @param {@link FavoritoTo favorito}
+	 * @param params the params
 	 */
 	void aumentaFrecuenciaOpc(Map<String, Object> params);
+	
 	/**
 	 * Mapper eliminaFavorito.
 	 *
-	 * @param {@link FavoritoTo favorito}
+	 * @param params the params
 	 */
 	void eliminaFavorito(Map<String, Object> params);
 	/**
@@ -97,16 +117,18 @@ public interface SeguridadMapper {
 	 * @param params de entrada
 	 */
 	void obtieneDatosUsuario(Map<String, Object> params);
+	
 	/**
 	 * Mapper validaToken.
 	 *
-	 * @param {@link TokenUsuarioTo tokenUsuario}
+	 * @param params the params
 	 */
 	void validaToken(Map<String, Object> params);
+	
 	/**
 	 * Mapper obtieneRolUsuario.
-	 * 
-	 * @param params
+	 *
+	 * @param params the params
 	 */
 	void obtieneRolUsuario(Map<String, Object> params);
 

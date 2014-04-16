@@ -41,14 +41,19 @@ import org.apache.log4j.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import cl.bluex.seguridad.SeguridadDao;
+import cl.bluex.seguridad.bean.NewDatosUsuario;
 import cl.bluex.seguridad.bean.Rol;
+import cl.bluex.seguridad.bean.request.RequestDatosUsuario;
 import cl.bluex.seguridad.bean.request.RequestObtieneOpcionesMenu;
 import cl.bluex.seguridad.bean.request.RequestObtieneRolUsuario;
+import cl.bluex.seguridad.bean.response.ResponseDatosUsuario;
 import cl.bluex.seguridad.bean.response.ResponseObtieneRolUsuario;
 import cl.bluex.seguridad.factory.DaoFactory;
 import cl.bluex.seguridad.factory.SeguridadDaoFactory;
 import cl.bluex.seguridad.to.Autenticacion;
 import cl.bluex.seguridad.to.FavoritoTo;
+import cl.bluex.seguridad.to.NewDatosUsuarioTO;
+import cl.bluex.seguridad.to.NewUsuarioTO;
 import cl.bluex.seguridad.to.OpcionesMenuTo;
 import cl.bluex.seguridad.to.RolTO;
 import cl.bluex.seguridad.to.TokenUsuarioTo;
@@ -60,8 +65,9 @@ import cl.bluex.ws.common.exceptions.BluexException;
 import cl.bluex.ws.common.head.Cabecera;
 
 /**
+ * The Class SeguridadServiceImpl.
+ *
  * @author Edgardo Herrera
- * 
  */
 @WebService(
 	name = "Seguridad",
@@ -80,8 +86,13 @@ import cl.bluex.ws.common.head.Cabecera;
 	urlPattern = "/BXSEG001_login")
 public class SeguridadServiceImpl implements SeguridadService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(SeguridadServiceImpl.class);
+	
+	/** The Constant VALOR_ERRONEO_TOTAL_INTENTOS_FALLIDOS. */
 	private static final String VALOR_ERRONEO_TOTAL_INTENTOS_FALLIDOS = "el valor en total de intentos fallidos es erroneo";
+	
+	/** The Constant VALOR_ERRONEO_NRO_INTENTOS_FALLIDOS. */
 	private static final String VALOR_ERRONEO_NRO_INTENTOS_FALLIDOS = "el valor en numero de intentos fallidos es erroneo";
 
 	/**
@@ -114,10 +125,15 @@ public class SeguridadServiceImpl implements SeguridadService {
 		datos.setPassword(password);
 		datos.setNumIP(numIP);
 		datos.setOrigen(origen);
-
+		
+		// Va a PCK_SEGURIDAD.prc_Autentificacion
+		// y si es <> de null o <> Cero llama al metodo actualizarNroIntentos
+		// no retorna nada
 		autentificarUsuario(datos);
 
 		// VALIDACION INTENTOS FALLIDOS
+		// PCK_SEGURIDAD.fnc_DatosValidaUsuario
+		// llama validarUsuario
 		final UsuarioValido usuarioValido = validarIntentosFallidos(username,
 				password);
 
@@ -130,6 +146,46 @@ public class SeguridadServiceImpl implements SeguridadService {
 		return tokenUsuario;
 	}
 
+	
+	
+	/* (non-Javadoc)
+	 * @see cl.bluex.seguridad.ws.SeguridadService#getValidarUsuario(cl.bluex.seguridad.bean.request.RequestDatosUsuario, cl.bluex.ws.common.head.Cabecera)
+	 */
+	@Override
+	public ResponseDatosUsuario getValidarUsuario(RequestDatosUsuario request) throws BluexException {
+		
+		LOGGER.info("[getValidarUsuario] inicio getValidarUsuario.");
+		
+		ResponseDatosUsuario response;
+		
+		final DaoFactory daoFactory = SeguridadDaoFactory.getInstance().getDaoFactory();
+		final SeguridadDao seguridaDao = daoFactory.getSeguridadDao();
+		
+		final Autenticacion datos = new Autenticacion();
+		datos.setUsername(request.getParametrosEntrada().getUsername());
+		datos.setPassword(request.getParametrosEntrada().getPassword());
+		
+		datos.setToken(this.crearNuevoToken(datos));
+		
+		try {
+			
+			final NewUsuarioTO entradaTO = Mappers.mapeaTOentrada(datos);
+			final NewDatosUsuarioTO salidaTO = seguridaDao.getValidarUsuario(entradaTO);
+			final NewDatosUsuario respuesta = Mappers.mapeaTOsalida(salidaTO);
+			
+			response = new ResponseDatosUsuario(respuesta);
+			
+		} finally {
+			daoFactory.close();
+		}
+		
+		LOGGER.info("[getValidarUsuario] fin getValidarUsuario.");
+		
+		return response;
+	}
+	
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -392,6 +448,14 @@ public class SeguridadServiceImpl implements SeguridadService {
 		LOGGER.debug("Fin cerrarSesion");
 	}
 
+	/**
+	 * Validar token.
+	 *
+	 * @param autenticacion the autenticacion
+	 * @param usuarioValido the usuario valido
+	 * @return the token usuario to
+	 * @throws BluexException the bluex exception
+	 */
 	private TokenUsuarioTo validarToken(final Autenticacion autenticacion,
 			final UsuarioValido usuarioValido) throws BluexException {
 		LOGGER.info("Inicio validarToken");
@@ -403,6 +467,8 @@ public class SeguridadServiceImpl implements SeguridadService {
 				.getUsername());
 		final String nuevoToken = this.validarToken(autenticacion,
 				usuarioValido, tokens);
+		
+		
 		// VALIDACION TOKEN
 		final Date fechaActual = new Date();
 		final DateFormat formatter = new SimpleDateFormat(
@@ -455,6 +521,15 @@ public class SeguridadServiceImpl implements SeguridadService {
 		return tokenUsuario;
 	}
 
+	/**
+	 * Validar token.
+	 *
+	 * @param autenticacion the autenticacion
+	 * @param usuarioValido the usuario valido
+	 * @param tokens the tokens
+	 * @return the string
+	 * @throws BluexException the bluex exception
+	 */
 	private String validarToken(final Autenticacion autenticacion,
 			final UsuarioValido usuarioValido, 
 			final List<TokenUsuarioTo> tokens)
@@ -487,6 +562,12 @@ public class SeguridadServiceImpl implements SeguridadService {
 		return nuevoToken;
 	}
 
+	/**
+	 * Eliminar token.
+	 *
+	 * @param codigoToken the codigo token
+	 * @throws BluexException the bluex exception
+	 */
 	private void eliminarToken(final String codigoToken) throws BluexException {
 		LOGGER.info("Inicio eliminarToken");
 		
@@ -501,6 +582,12 @@ public class SeguridadServiceImpl implements SeguridadService {
 		LOGGER.info("Fin eliminarToken");
 	}
 
+	/**
+	 * Validar vigencia pass.
+	 *
+	 * @param usuarioValido the usuario valido
+	 * @throws BluexException the bluex exception
+	 */
 	private void validarVigenciaPass(final UsuarioValido usuarioValido)
 			throws BluexException {
 		LOGGER.info("Inicio validarVigenciaPass");
@@ -527,6 +614,14 @@ public class SeguridadServiceImpl implements SeguridadService {
 		LOGGER.info("Fin validarVigenciaPass");
 	}
 
+	/**
+	 * Validar intentos fallidos.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the usuario valido
+	 * @throws BluexException the bluex exception
+	 */
 	private UsuarioValido validarIntentosFallidos(final String username,
 			final String password) throws BluexException {
 		LOGGER.info("Inicio metodo validarIntentosFallidos");
@@ -561,6 +656,12 @@ public class SeguridadServiceImpl implements SeguridadService {
 		return usuarioValido;
 	}
 
+	/**
+	 * Autentificar usuario.
+	 *
+	 * @param datos the datos
+	 * @throws BluexException the bluex exception
+	 */
 	private void autentificarUsuario(final Autenticacion datos)
 			throws BluexException {
 		LOGGER.info("Inicio autentificarUsuario");
@@ -587,9 +688,16 @@ public class SeguridadServiceImpl implements SeguridadService {
 		LOGGER.info("Fin autentificarUsuario");
 	}
 
+	/**
+	 * Crear nuevo token.
+	 *
+	 * @param datos the datos
+	 * @return the string
+	 * @throws BluexException the bluex exception
+	 */
 	private String crearNuevoToken(final Autenticacion datos)
 			throws BluexException {
-		LOGGER.info("Inicio crearNuevoToken");
+		LOGGER.info("[crearNuevoToken] Inicio crearNuevoToken");
 		
 		final DateFormat formatter = new SimpleDateFormat(YYYY_MM_DD_HHMMSS,
 				Locale.getDefault());
@@ -598,10 +706,17 @@ public class SeguridadServiceImpl implements SeguridadService {
 		final String tokenSinEncriptar = datos.getUsername() + strFechaActual;
 		final String nuevoToken = Util.encriptaEnMD5(tokenSinEncriptar);
 
-		LOGGER.info("Fin crearNuevoToken");
+		LOGGER.info("[crearNuevoToken] Fin crearNuevoToken");
 		return nuevoToken;
 	}
-
+	
+	/**
+	 * Trae token usuario.
+	 *
+	 * @param username the username
+	 * @return the list
+	 * @throws BluexException the bluex exception
+	 */
 	private List<TokenUsuarioTo> traeTokenUsuario(final String username)
 			throws BluexException {
 		LOGGER.info("Fin crearNuevoToken");
@@ -654,6 +769,12 @@ public class SeguridadServiceImpl implements SeguridadService {
 		return response;
 	}
 	
+	/**
+	 * Token es valido.
+	 *
+	 * @param token the token
+	 * @throws BluexException the bluex exception
+	 */
 	private void tokenEsValido(final String token) throws BluexException {
 		LOGGER.info("Inicio metodo tokenEsValido");
 		

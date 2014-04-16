@@ -29,9 +29,9 @@ public interface EtiquetaSolucionService {
 	 * @throws BluexException the bluex exception
 	 */
 	@WebMethod(
-		operationName = "getSolucionEtiqueta",
-		action = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType/getSolucionEtiqueta")
-	ResponseEtiquetaSolucion getSolucionEtiqueta(
+		operationName = "getEtiquetaSolucion",
+		action = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType/getEtiquetaSolucion")
+	ResponseEtiquetaSolucion getEtiquetaSolucion(
 			@WebParam(
 				name = "requestEtiquetaSolucion",
 				targetNamespace = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType",

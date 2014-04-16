@@ -3,10 +3,10 @@ package cl.bluex.etiquetasolucion.tool;
 import java.util.ArrayList;
 import java.util.List;
 
-import cl.bluex.etiquetasolucion.bean.ParametrosEntrada;
-import cl.bluex.etiquetasolucion.bean.ParametrosSalida;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosEntradaTO;
-import cl.bluex.etiquetasolucionmodel.to.ParametrosSalidaTO;
+import cl.bluex.etiquetasolucion.bean.Inquietud;
+import cl.bluex.etiquetasolucion.bean.Solucion;
+import cl.bluex.etiquetasolucionmodel.to.InquietudTO;
+import cl.bluex.etiquetasolucionmodel.to.SolucionTO;
 
 
 /**
@@ -23,15 +23,15 @@ public final class Mappers {
 
 	
 	/**
-	 * Mapea de {@link ParametrosEntradaTO} a {@link ParametrosEntradaTO}.
+	 * Mapea de {@link InquietudTO} a {@link InquietudTO}.
 	 * 
-	 * @param bean {@link ParametrosEntrada}
-	 * @return {@link ParametrosEntradaTO}
+	 * @param bean {@link Inquietud}
+	 * @return {@link InquietudTO}
 	 */
-	public static ParametrosEntradaTO mapeaTOentrada(
-			final ParametrosEntrada bean) {
+	public static InquietudTO mapeaTOentrada(
+			final Inquietud bean) {
 		
-		final ParametrosEntradaTO to = new ParametrosEntradaTO();
+		final InquietudTO to = new InquietudTO();
 		
 		to.setCodigoCliente(bean.getCodigoCliente());
 		to.setCodigoEmpresa(bean.getCodigoEmpresa());
@@ -48,18 +48,18 @@ public final class Mappers {
 
 	
 	/**
-	 * Metodo que mapea una lista de {@link ParametrosSalidaTO} a una de {@link ParametrosSalida}.
+	 * Metodo que mapea una lista de {@link SolucionTO} a una de {@link Solucion}.
 	 * 
-	 * @param tos lista de {@link ParametrosSalidaTO}
-	 * @return lista de {@link ParametrosSalida}
+	 * @param tos lista de {@link SolucionTO}
+	 * @return lista de {@link Solucion}
 	 */
-	public static List<ParametrosSalida> mapeaTOsalida(
-			final List<ParametrosSalidaTO> tos) {
+	public static List<Solucion> mapeaTOsalida(
+			final List<SolucionTO> tos) {
 		
-		final List<ParametrosSalida> beans = new ArrayList<ParametrosSalida>();
+		final List<Solucion> beans = new ArrayList<Solucion>();
 		
-		for(final ParametrosSalidaTO to : tos) {
-			beans.add(new ParametrosSalida(to));
+		for(final SolucionTO to : tos) {
+			beans.add(new Solucion(to));
 		}
 		return beans;
 	}

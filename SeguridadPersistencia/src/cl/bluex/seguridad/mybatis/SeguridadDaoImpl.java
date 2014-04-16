@@ -9,11 +9,14 @@ import static cl.bluex.ws.common.util.Constantes.FECHA_INICIO;
 import static cl.bluex.ws.common.util.Constantes.FECHA_TERMINO;
 import static cl.bluex.ws.common.util.Constantes.PASSWORD;
 import static cl.bluex.ws.common.util.Constantes.RESULTADO;
+import static cl.bluex.ws.common.util.Constantes.SUB_RESULTADO;
 import static cl.bluex.ws.common.util.Constantes.TOKEN;
 import static cl.bluex.ws.common.util.Constantes.TOKEN_USUARIO;
 import static cl.bluex.ws.common.util.Constantes.UNCHECKED;
 import static cl.bluex.ws.common.util.Constantes.USERNAME;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,9 @@ import cl.bluex.seguridad.SeguridadDao;
 import cl.bluex.seguridad.mapper.SeguridadMapper;
 import cl.bluex.seguridad.to.Autenticacion;
 import cl.bluex.seguridad.to.FavoritoTo;
+import cl.bluex.seguridad.to.NewDatosUsuarioTO;
+import cl.bluex.seguridad.to.NewEmpresaPaisTO;
+import cl.bluex.seguridad.to.NewUsuarioTO;
 import cl.bluex.seguridad.to.OpcionesMenuTo;
 import cl.bluex.seguridad.to.RolTO;
 import cl.bluex.seguridad.to.TokenUsuarioTo;
@@ -79,6 +85,7 @@ public class SeguridadDaoImpl extends AbstractDao<SeguridadMapper> implements
 	@SuppressWarnings(UNCHECKED)
 	public List<UsuarioValido> validarUsuario(final String username, final String password)
 			throws BluexException {
+		
 		params = new HashMap<String, Object>();
 		params.put(USERNAME, username);
 		params.put(PASSWORD, password);
@@ -89,6 +96,39 @@ public class SeguridadDaoImpl extends AbstractDao<SeguridadMapper> implements
 
 		return (List<UsuarioValido>) params.get(RESULTADO);
 	}
+	
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cl.bluex.persistencia.dao.Dao#getValidarUsuario(java.util.Map)
+	 */
+	@Override
+	public NewDatosUsuarioTO getValidarUsuario(final NewUsuarioTO newUsuarioTO)
+			throws BluexException {
+		
+		params = new HashMap<String, Object>();
+		params.put(USERNAME, newUsuarioTO.getUsername());
+		params.put(PASSWORD, newUsuarioTO.getPassword());
+		params.put(TOKEN, newUsuarioTO.getToken());
+		
+		getMapper().getValidarUsuario(params);
+		
+		this.esExcepcion();
+		
+		@SuppressWarnings("unchecked")
+		List<NewDatosUsuarioTO> listaUsuarios = (List<NewDatosUsuarioTO>) params.get(RESULTADO);
+		@SuppressWarnings("unchecked")
+		List<NewEmpresaPaisTO> listaEmpresaPais = (List<NewEmpresaPaisTO>) params.get(SUB_RESULTADO);
+		
+		listaUsuarios.get(0).setListaEmpresaPais(listaEmpresaPais);
+		listaUsuarios.get(0).setToken(newUsuarioTO.getToken());
+		
+		return listaUsuarios.get(0);
+	}
+	
+	
 
 	/*
 	 * (non-Javadoc)
