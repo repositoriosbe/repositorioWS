@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import cl.bluex.etiquetasolucion.bean.Inquietud;
+import cl.bluex.etiquetasolucion.bean.SolicitudImpresion;
 
 /**
  * The Class RequestEtiquetaSolucion.
@@ -13,40 +13,41 @@ import cl.bluex.etiquetasolucion.bean.Inquietud;
  * @author rmoscoso
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "requestEtiquetaSolucion")
-public class RequestEtiquetaSolucion {
+@XmlType(name = "requestImpresionSolucion")
+public class RequestImpresionSolucion {
 	
 	/** The inp etiqueta solucion. */
 	@XmlElement(required = true)
-	private Inquietud inquietud;
+	private SolicitudImpresion impresion;
 	
 	
 	/**
 	 * Instantiates a new request etiqueta solucion.
 	 */
-	public RequestEtiquetaSolucion() {
+	public RequestImpresionSolucion() {
 		super();
 	}
 
 
 	/**
-	 * Gets the inquietud.
+	 * Gets the impresion.
 	 *
-	 * @return the inquietud
+	 * @return the impresion
 	 */
-	public Inquietud getInquietud() {
-		return inquietud;
+	public SolicitudImpresion getImpresion() {
+		return impresion;
 	}
 
 
 	/**
-	 * Sets the inquietud.
+	 * Sets the impresion.
 	 *
-	 * @param inquietud the new inquietud
+	 * @param impresion the new impresion
 	 */
-	public void setInquietud(Inquietud inquietud) {
-		this.inquietud = inquietud;
+	public void setImpresion(SolicitudImpresion impresion) {
+		this.impresion = impresion;
 	}
+
 
 
 

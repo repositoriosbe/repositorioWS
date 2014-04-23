@@ -15,9 +15,19 @@ public interface EtiquetaSolucionMapper {
     /**
      * Gets the solucion etiqueta.
      *
-     * @param {@link Map<String, Object> params}
+     * @param params the params
      * @return the solucion etiqueta
      */
     void getSolucionEtiqueta(Map<String, Object> params);
+    
+    
+    /**
+     * Gets the impresion solucion.
+     *
+     * @param params the params
+     * @return the impresion solucion
+     */
+    void getImpresionSolucion(Map<String, Object> params);
+    
 	
 }

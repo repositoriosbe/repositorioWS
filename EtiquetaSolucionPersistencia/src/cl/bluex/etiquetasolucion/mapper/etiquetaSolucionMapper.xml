@@ -53,4 +53,63 @@
 <!-- FIN pck_etiqueta_solucion.get_solucion_etiqueta -->
 
 
+	<resultMap id="getImpresionSolucionRM" type="cl.bluex.etiquetasolucionmodel.to.DatosImpresionTO">
+		<result property="p_basedest" 		column="p_basedest" />
+		<result property="p_bd" 			column="p_bd" />
+		<result property="p_c01" 			column="p_c01" />
+		<result property="p_c02" 			column="p_c02" />
+		<result property="p_c03"			column="p_c03" />
+		<result property="p_c04"			column="p_c04" />
+		<result property="p_c128_cb28l" 	column="p_c128_cb28l" />
+		<result property="p_c39_os" 		column="p_c39_os" />
+		<result property="p_cbl28" 			column="p_cbl28" />
+		<result property="p_cde" 			column="p_cde" />
+		<result property="p_comuna"			column="p_comuna" />
+		<result property="p_contacto_dest"	column="p_contacto_dest" />
+		<result property="p_cta_cte"		column="p_cta_cte" />
+		<result property="p_dims"			column="p_dims" />
+		<result property="p_dir_dest1"		column="p_dir_dest1" />
+		<result property="p_dir_emba0"		column="p_dir_emba0" />
+		<result property="p_dir_emba1"		column="p_dir_emba1" />
+		<result property="p_dir_emba2"		column="p_dir_emba2" />
+		<result property="p_eop"			column="p_eop" />
+		<result property="p_fch_impr"		column="p_fch_impr" />
+		<result property="p_folio"			column="p_folio" />
+		<result property="p_fono_dest"		column="p_fono_dest" />
+		<result property="p_monto_cod"		column="p_monto_cod" />
+		<result property="p_nmb_emba"		column="p_nmb_emba" />
+		<result property="p_nmb_psta"		column="p_nmb_psta" />
+		<result property="p_nomb_dest"		column="p_nomb_dest" />
+		<result property="p_obs"			column="p_obs" />
+		<result property="p_or"				column="p_or" />
+		<result property="p_pdf417_cb2d_os"	column="p_pdf417_cb2d_os" />
+		<result property="p_peso"			column="p_peso" />
+		<result property="p_refer"			column="p_refer" />
+		<result property="p_servicio"		column="p_servicio" />
+		<result property="p_sr"				column="p_sr" />
+		<result property="p_tbu"			column="p_tbu" />
+		<result property="p_pdt"			column="p_pdt" />
+		</resultMap>
+		
+	<parameterMap id="getImpresionSolucionPM" type="map">
+		<parameter property="i_eevv_nmr_id" 	jdbcType="NUMERIC" 	javaType="java.math.BigInteger"	mode="IN" />
+		<parameter property="i_imte_cdg" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="IN" />
+		<parameter property="resultado" 		jdbcType="CURSOR" 	javaType="java.sql.ResultSet" 	mode="OUT" resultMap="getImpresionSolucionRM" />
+		<parameter property="o_imte_template" 	jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="OUT" />
+		<parameter property="o_eevv_nmr_serie" 	jdbcType="NUMERIC" 	javaType="java.math.BigInteger"	mode="OUT" />
+		<parameter property="o_srtr_cdg" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="OUT" />
+		<parameter property="codError" 			jdbcType="NUMERIC" 	javaType="int" 					mode="INOUT" />
+		<parameter property="descError" 		jdbcType="VARCHAR" 	javaType="java.lang.String" 	mode="INOUT" />
+	</parameterMap>
+
+	<select id="getImpresionSolucion" 
+	    statementType="CALLABLE"
+		parameterMap="getImpresionSolucionPM">
+
+		{ call pck_etiqueta_solucion.get_impresion_etiqueta( ?,?,?,?,
+															 ?,?,?,? )}
+	    
+	</select>
+
+
 </mapper>

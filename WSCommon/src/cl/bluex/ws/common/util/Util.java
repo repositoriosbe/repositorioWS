@@ -80,4 +80,5 @@ public class Util {
 			throw new BluexException(nombreCampo + " es un campo obligatorio y diferente de cero");
 		}
 	}
+	
 }

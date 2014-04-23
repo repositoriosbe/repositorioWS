@@ -12,14 +12,20 @@ import org.apache.log4j.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import cl.bluex.etiquetasolucion.EtiquetaSolucionDao;
+import cl.bluex.etiquetasolucion.bean.ImpresionSolucion;
+import cl.bluex.etiquetasolucion.bean.SolicitudImpresion;
 import cl.bluex.etiquetasolucion.bean.Inquietud;
 import cl.bluex.etiquetasolucion.bean.Solucion;
 import cl.bluex.etiquetasolucion.bean.request.RequestEtiquetaSolucion;
+import cl.bluex.etiquetasolucion.bean.request.RequestImpresionSolucion;
 import cl.bluex.etiquetasolucion.bean.response.ResponseEtiquetaSolucion;
+import cl.bluex.etiquetasolucion.bean.response.ResponseImpresionSolucion;
 import cl.bluex.etiquetasolucion.factory.DaoFactory;
 import cl.bluex.etiquetasolucion.factory.EtiquetaSolucionDaoFactory;
 import cl.bluex.etiquetasolucion.tool.Mappers;
 import cl.bluex.etiquetasolucion.ws.session.SessionInterceptor;
+import cl.bluex.etiquetasolucionmodel.to.ImpresionSolucionTO;
+import cl.bluex.etiquetasolucionmodel.to.SolicitudImpresionTO;
 import cl.bluex.etiquetasolucionmodel.to.InquietudTO;
 import cl.bluex.etiquetasolucionmodel.to.SolucionTO;
 import cl.bluex.ws.common.exceptions.BluexException;
@@ -27,8 +33,9 @@ import cl.bluex.ws.common.head.Cabecera;
 import cl.bluex.ws.common.util.Util;
 
 /**
+ * The Class EtiquetaSolucionServiceImpl.
+ *
  * @author rmoscoso
- * 
  */
 @WebService(
 	endpointInterface = "cl.bluex.etiquetasolucion.ws.EtiquetaSolucionService",
@@ -47,6 +54,8 @@ import cl.bluex.ws.common.util.Util;
 	urlPattern = "/EtiquetaSolucion")
 @Interceptors(SessionInterceptor.class)
 public class EtiquetaSolucionServiceImpl implements EtiquetaSolucionService {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(EtiquetaSolucionServiceImpl.class);
 
 	/**
@@ -74,12 +83,12 @@ public class EtiquetaSolucionServiceImpl implements EtiquetaSolucionService {
 		final EtiquetaSolucionDao generadorDao = daoFactory.getEtiquetaSolucionDao();
 		
 		try {
-			final Inquietud entrada = request.getParametrosEntrada();
-			validacion(entrada);
+			final Inquietud entrada = request.getInquietud();
+			validacionEtiquetaSolucion(entrada);
 			
-			final InquietudTO entradaTO = Mappers.mapeaTOentrada(entrada);
-			final List<SolucionTO> outputTO = generadorDao.getSolucionEtiqueta(entradaTO);
-			final List<Solucion> respuesta = Mappers.mapeaTOsalida(outputTO);
+			final InquietudTO entradaTO = Mappers.mapeaTOentradaEtiqueta(entrada);
+			final List<SolucionTO> salidaTO = generadorDao.getSolucionEtiqueta(entradaTO);
+			final List<Solucion> respuesta = Mappers.mapeaTOsalidaEtiqueta(salidaTO);
 			
 			response = new ResponseEtiquetaSolucion(respuesta);
 			
@@ -92,11 +101,47 @@ public class EtiquetaSolucionServiceImpl implements EtiquetaSolucionService {
 	}
 	
 	
-	/**
-	 * @param parametro
-	 * @throws BluexException
+	/* (non-Javadoc)
+	 * @see cl.bluex.etiquetasolucion.ws.EtiquetaSolucionService#getImpresionSolucion(cl.bluex.etiquetasolucion.bean.request.RequestImpresionSolucion, cl.bluex.ws.common.head.Cabecera)
 	 */
-	private void validacion(final Inquietud parametro)
+	@Override
+	public ResponseImpresionSolucion getImpresionSolucion(
+			final RequestImpresionSolucion request,
+			final Cabecera cabecera) 
+			throws BluexException {
+		
+		LOGGER.info("[getImpresionSolucion] inicio getImpresionSolucion.");
+		ResponseImpresionSolucion response;
+		
+		final DaoFactory daoFactory = EtiquetaSolucionDaoFactory.getInstance().getDaoFactory();
+		final EtiquetaSolucionDao generadorDao = daoFactory.getEtiquetaSolucionDao();
+		
+		try {
+			final SolicitudImpresion entrada = request.getImpresion();
+			
+			final SolicitudImpresionTO entradaTO = Mappers.mapeaTOentradaImpresion(entrada);
+			final ImpresionSolucionTO salidaTO = generadorDao.getImpresionSolucion(entradaTO);
+			final ImpresionSolucion respuesta = Mappers.mapeaTOsalidaImpresion(salidaTO);
+			
+			response = new ResponseImpresionSolucion(respuesta);
+			
+		} finally {
+			daoFactory.close();
+		}
+		
+		LOGGER.info("[getImpresionSolucion] fin getImpresionSolucion.");
+		return response;
+	}
+	
+	
+	
+	/**
+	 * Validacion etiqueta solucion.
+	 *
+	 * @param parametro the parametro
+	 * @throws BluexException the bluex exception
+	 */
+	private void validacionEtiquetaSolucion(final Inquietud parametro)
 			throws BluexException {
 		
 		Util.validaObligatorio(parametro.getFechaInicio(), "fechaInicio");

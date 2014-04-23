@@ -5,11 +5,12 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import cl.bluex.etiquetasolucion.bean.request.RequestEtiquetaSolucion;
+import cl.bluex.etiquetasolucion.bean.request.RequestImpresionSolucion;
 import cl.bluex.etiquetasolucion.bean.response.ResponseEtiquetaSolucion;
+import cl.bluex.etiquetasolucion.bean.response.ResponseImpresionSolucion;
 import cl.bluex.ws.common.exceptions.BluexException;
 import cl.bluex.ws.common.head.Cabecera;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface EtiquetaSolucionService.
  *
@@ -22,6 +23,9 @@ public interface EtiquetaSolucionService {
 
 	/**
 	 * Gets the solucion etiqueta.
+	 * 
+	 * Metodo encargado de obtener los IQ/Soluciones para los despachos
+	 * que no pudieron ser entregados
 	 *
 	 * @param request the request
 	 * @param cabecera the cabecera
@@ -43,5 +47,30 @@ public interface EtiquetaSolucionService {
 				targetNamespace = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType",
 				header = true) Cabecera cabecera) throws BluexException;
 
+	
+	/**
+	 * Gets the impresion solucion.
+	 *
+	 * Metodo encargado de imprimir la etiqueta de solución para sorter
+	 *
+	 * @param request the request
+	 * @param cabecera the cabecera
+	 * @return the impresion solucion
+	 * @throws BluexException the bluex exception
+	 */
+	@WebMethod(
+			operationName = "getImpresionSolucion",
+			action = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType/getImpresionSolucion")
+		ResponseImpresionSolucion getImpresionSolucion(
+				@WebParam(
+					name = "requestImpresionSolucion",
+					targetNamespace = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType",
+					partName = "requestImpresionSolucion",
+					header = false) RequestImpresionSolucion request,
+				@WebParam(
+					name = "Cabecera",
+					partName = "Cabecera",
+					targetNamespace = "http://EtiquetaSolucionWS/EtiquetaSolucion/EtiquetaSolucionPortType",
+					header = true) Cabecera cabecera) throws BluexException;
 	
 }
